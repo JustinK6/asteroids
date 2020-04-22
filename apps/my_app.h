@@ -4,7 +4,11 @@
 #define FINALPROJECT_APPS_MYAPP_H_
 
 #include <cinder/app/App.h>
+#include <poScene/Scene.h>
 
+using namespace ci;
+using namespace ci::app;
+using namespace po::scene;
 
 namespace myapp {
 
