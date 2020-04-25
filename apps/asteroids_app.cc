@@ -13,18 +13,18 @@ AsteroidsApp::AsteroidsApp() { }
 
 void AsteroidsApp::setup() {
   setWindowSize( 800, 600 );
-  mViewController	= asteroids::GameViewController::create();
-  mScene = po::scene::Scene::create( mViewController );
+  main_view_controller_	= asteroids::MainViewController::create();
+  main_scene_ = po::scene::Scene::create(main_view_controller_ );
 }
 
 void AsteroidsApp::update() {
-  mScene->update();
+  main_scene_->update();
 }
 
 void AsteroidsApp::draw() {
   // clear out the window with black
   gl::clear( Color( 0.0, 0.0f, 0.0 ) );
-  mScene->draw();
+  main_scene_->draw();
 }
 
 void AsteroidsApp::keyDown(KeyEvent event) { }
