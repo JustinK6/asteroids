@@ -143,7 +143,7 @@ function( ci_make_library )
         set_target_properties( ${ARG_LIBRARY_NAME} PROPERTIES LINK_FLAGS_DEBUG "/NODEFAULTLIB:LIBCMT /NODEFAULTLIB:LIBCPMT" )
     endif()
 
-    # Blocks are first searched relative to the sample's CMakeLists.txt file, then within cinder's blocks folder
+    # Blocks are first searched relative to the asteroids's CMakeLists.txt file, then within cinder's blocks folder
     foreach( block ${ARG_BLOCKS} )
         get_filename_component( blockModuleDir "${CMAKE_CURRENT_SOURCE_DIR}/${block}/proj/cmake" ABSOLUTE )
         set( blockName "" )

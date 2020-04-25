@@ -6,6 +6,9 @@ get_filename_component(CINDER_PATH "${CMAKE_CURRENT_SOURCE_DIR}/../../../" ABSOL
 include("${CINDER_PATH}/proj/cmake/modules/cinderMakeApp.cmake")
 include("${FinalProject_SOURCE_DIR}/cmake/make_cinder_library.cmake")
 
+file(GLOB HEADER_LIST CONFIGURE_DEPENDS
+        "${FinalProject_SOURCE_DIR}/include/asteroids/*.h"
+        "${FinalProject_SOURCE_DIR}/include/asteroids/*.hpp")
 
 file(GLOB SOURCE_LIST CONFIGURE_DEPENDS
         "${FinalProject_SOURCE_DIR}/src/*.h"
