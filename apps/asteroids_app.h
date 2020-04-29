@@ -5,7 +5,7 @@
 
 #include <cinder/app/App.h>
 #include <poScene/Scene.h>
-#include <asteroids/MainViewController.h>
+#include <asteroids/ViewController.h>
 
 using namespace ci;
 using namespace ci::app;
@@ -22,7 +22,7 @@ class AsteroidsApp : public cinder::app::App {
   void keyDown(cinder::app::KeyEvent) override;
 
   po::scene::SceneRef main_scene_;
-  asteroids::MainViewControllerRef main_view_controller_;
+  asteroids::ViewControllerRef main_view_controller_;
 };
 
 }  // namespace asteroidsapp
