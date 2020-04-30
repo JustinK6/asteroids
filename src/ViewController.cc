@@ -10,7 +10,7 @@ using namespace po::scene;
 
 namespace asteroids
 {
-  float game_hue = 0.6f;
+  float game_hue = 0.0f;
   float ui_hue = 0.4f;
   float brightness = 0.65f;
   float saturation = 0.5f;
