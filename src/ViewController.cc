@@ -10,13 +10,12 @@ using namespace po::scene;
 
 namespace asteroids
 {
-  float game_hue = 0.0f;
   float ui_hue = 0.4f;
   float brightness = 0.65f;
   float saturation = 0.5f;
 
   float kWindowWidth = 800;
-  float kWindowHeight = 600;
+  float kWindowHeight = 800;
 
   ci::Color boundsColor( 1.0f, 1.0f, 1.0f );
 
@@ -29,7 +28,7 @@ namespace asteroids
   {
     // Scene BG
     game_background_ = ShapeView::createRect(kWindowWidth, 3 * kWindowHeight / 4 );
-    game_background_->setFillColor(ci::Color(ci::CM_HSV, game_hue, saturation, brightness ) )
+    game_background_->setFillColor(ci::Color(ci::Color::black() ) )
       .setSuperviewShouldIgnoreInBounds( true );
 
     // Node Container

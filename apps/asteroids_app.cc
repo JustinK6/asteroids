@@ -12,7 +12,6 @@ using cinder::app::KeyEvent;
 AsteroidsApp::AsteroidsApp() { }
 
 void AsteroidsApp::setup() {
-  setWindowSize( 800, 600 );
   main_view_controller_	= asteroids::ViewController::create();
   main_scene_ = po::scene::Scene::create(main_view_controller_ );
 }
