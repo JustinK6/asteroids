@@ -3,3 +3,11 @@
 //
 
 #include "asteroids/Bullet.h"
+
+std::pair<double, double> asteroids::Bullet::GetPosition() {
+  return std::pair<double, double>();
+}
+
+void asteroids::Bullet::UpdatePosition(double x_val, double y_val) {
+
+}

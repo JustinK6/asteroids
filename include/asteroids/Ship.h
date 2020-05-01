@@ -5,10 +5,24 @@
 #ifndef FINALPROJECT_SHIP_H
 #define FINALPROJECT_SHIP_H
 
+#include <utility>
+#include <vector>
+#include "Bullet.h"
 
-class Ship {
+namespace asteroids {
+  class Ship {
+  public:
+    std::pair<double, double> GetPosition();
+    void UpdatePosition(double x_val, double y_val);
+    std::vector<Bullet> GetBullets();
 
-};
+  private:
+    int health_;
+    double x_pos_;
+    double y_pos_;
 
+    std::vector<Bullet> bullets;
+  };
+}
 
 #endif //FINALPROJECT_SHIP_H

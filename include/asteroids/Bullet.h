@@ -6,9 +6,20 @@
 #define FINALPROJECT_BULLET_H
 
 
-class Bullet {
+#include <utility>
+namespace asteroids {
+  class Bullet {
+  public:
+    std::pair<double, double> GetPosition();
 
-};
+    void UpdatePosition(double x_val, double y_val);
+
+  private:
+    double x_pos_;
+    double y_pos_;
+  };
+}
+
 
 
 #endif //FINALPROJECT_BULLET_H
