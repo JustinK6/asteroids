@@ -19,6 +19,7 @@ const int kHeight = 800;
 void SetUp(App::Settings* settings) {
   settings->setWindowSize(kWidth, kHeight);
   settings->setTitle("Asteroids");
+  settings->setResizable(false);
 }
 
 }  // namespace asteroidsapp

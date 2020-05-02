@@ -21,8 +21,6 @@ namespace asteroids
 
     void update() override;
 
-    void KeyDown(ci::app::KeyEvent KeyEvent);
-
   private:
     po::scene::ViewRef game_view_;
     po::scene::ShapeViewRef game_background_;
@@ -31,5 +29,11 @@ namespace asteroids
     po::scene::ShapeViewRef ui_background_;
 
     Engine game_engine_;
+
+    ci::gl::TextureRef ship_image_;
+    po::scene::ShapeViewRef ship_shape_;
+
+    void KeyDown(ci::app::KeyEvent KeyEvent);
+    void SetUpViews();
   };
 }
