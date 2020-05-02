@@ -14,20 +14,15 @@ namespace asteroids
   float brightness = 0.65f;
   float saturation = 0.5f;
 
-  float kWindowWidth = 800;
-  float kWindowHeight = 800;
-
   ci::Color boundsColor( 1.0f, 1.0f, 1.0f );
 
-  ViewControllerRef ViewController::create()
-  {
+  ViewControllerRef ViewController::create() {
     return ViewControllerRef(new ViewController() );
   }
 
-  void ViewController::viewDidLoad()
-  {
+  void ViewController::viewDidLoad() {
     // Scene BG
-    game_background_ = ShapeView::createRect(kWindowWidth, 3 * kWindowHeight / 4 );
+    game_background_ = ShapeView::createRect(ci::app::getWindowWidth(), 3 * ci::app::getWindowHeight() / 4 );
     game_background_->setFillColor(ci::Color(ci::Color::black() ) )
       .setSuperviewShouldIgnoreInBounds( true );
 
@@ -39,13 +34,13 @@ namespace asteroids
       .setName( "Game View" );
     game_view_->addSubview(game_background_);
 
-    ui_background_ = ShapeView::createRect(kWindowWidth, kWindowHeight / 4 );
+    ui_background_ = ShapeView::createRect(ci::app::getWindowHeight(), ci::app::getWindowWidth() / 4 );
     ui_background_->setFillColor(ci::Color(ci::CM_HSV, ui_hue, saturation, brightness ) )
       .setSuperviewShouldIgnoreInBounds( true );
 
     // Node Container
     ui_view_ = View::create("Game UI" );
-    ui_view_->setPosition(0, 3 * kWindowHeight / 4 )
+    ui_view_->setPosition(0, 3 * ci::app::getWindowHeight() / 4 )
       .setDrawBounds( true )
       .setBoundsColor( boundsColor )
       .setName( "Game UI" );
@@ -59,5 +54,13 @@ namespace asteroids
       .setPosition( ci::vec2( 0, 0 ) )
       .setDrawBounds( true )
       .setBoundsColor( boundsColor );
+  }
+
+  void ViewController::update() {
+
+  }
+
+  void ViewController::KeyDown(ci::app::KeyEvent KeyEvent) {
+
   }
 }

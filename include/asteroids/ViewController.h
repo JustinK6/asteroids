@@ -4,6 +4,7 @@
 #include "poScene/ViewController.h"
 #include "poScene/ShapeView.h"
 #include "poScene/TextView.h"
+#include "Engine.h"
 
 namespace asteroids
 {
@@ -18,11 +19,17 @@ namespace asteroids
 
     void viewDidLoad() override;
 
+    void update() override;
+
+    void KeyDown(ci::app::KeyEvent KeyEvent);
+
   private:
     po::scene::ViewRef game_view_;
     po::scene::ShapeViewRef game_background_;
 
     po::scene::ViewRef ui_view_;
     po::scene::ShapeViewRef ui_background_;
+
+    Engine game_engine_;
   };
 }

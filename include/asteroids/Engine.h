@@ -12,9 +12,13 @@
 namespace asteroids {
   class Engine {
   public:
+    Engine();
+
     int GetScore();
     Ship GetShip();
     std::vector<Asteroid> GetAsteroids();
+
+    void Step();
 
   private:
     int score;

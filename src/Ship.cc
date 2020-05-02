@@ -4,6 +4,10 @@
 
 #include "asteroids/Ship.h"
 
+asteroids::Ship::Ship(double x_start, double y_start) {
+
+}
+
 std::pair<double, double> asteroids::Ship::GetPosition() {
   return std::pair<double, double>();
 }

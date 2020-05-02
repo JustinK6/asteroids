@@ -26,6 +26,8 @@ void AsteroidsApp::draw() {
   main_scene_->draw();
 }
 
-void AsteroidsApp::keyDown(KeyEvent event) { }
+void AsteroidsApp::keyDown(KeyEvent event) {
+
+}
 
 }  // namespace asteroidsapp

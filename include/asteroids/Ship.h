@@ -12,6 +12,8 @@
 namespace asteroids {
   class Ship {
   public:
+    Ship(double x_start, double y_start);
+
     std::pair<double, double> GetPosition();
     void UpdatePosition(double x_val, double y_val);
     std::vector<Bullet> GetBullets();
