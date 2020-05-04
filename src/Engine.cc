@@ -24,6 +24,10 @@ std::vector<asteroids::Asteroid> asteroids::Engine::GetAsteroids() {
   return std::vector<Asteroid>();
 }
 
+void asteroids::Engine::UpdateShipPosition(double x_val, double y_val) {
+  player_ship_.SetPosition(x_val, y_val);
+}
+
 void asteroids::Engine::UpdateShipMovement(int val) {
   player_ship_.SetMovement(val);
 }

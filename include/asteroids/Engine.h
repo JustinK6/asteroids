@@ -19,6 +19,7 @@ namespace asteroids {
     std::vector<Asteroid> GetAsteroids();
 
     void UpdateShip();
+    void UpdateShipPosition(double x_pos, double y_pos);
     void UpdateShipMovement(int val);
     void UpdateShipRotation(double rad);
 

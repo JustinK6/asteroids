@@ -33,6 +33,8 @@ namespace asteroids
     ci::gl::TextureRef ship_image_;
     po::scene::ShapeViewRef ship_shape_;
 
+    void UpdateShip();
+
     void KeyDown(ci::app::KeyEvent KeyEvent);
     void KeyUp(ci::app::KeyEvent KeyEvent);
     void SetUpViews();

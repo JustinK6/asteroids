@@ -53,13 +53,36 @@ namespace asteroids
 
   void ViewController::update() {
     // Update the location of the ship
+    UpdateShip();
+
+  }
+
+  void ViewController::UpdateShip() {
     game_engine_.UpdateShip();
+
+    // Checking for going off the edge of the screen
+    double ship_x = game_engine_.GetShip().GetPosition().first;
+    double ship_y = game_engine_.GetShip().GetPosition().second;
+
+    // Check x position
+    if (ship_x > ci::app::getWindowWidth()) {
+      game_engine_.UpdateShipPosition(0, ship_y);
+    } else if (ship_x < 0) {
+      game_engine_.UpdateShipPosition(ci::app::getWindowWidth(), ship_y);
+    }
+
+    // Check y position
+    if (ship_y > 3 * ci::app::getWindowHeight() / 4) {
+      game_engine_.UpdateShipPosition(ship_x, 0);
+    } else if (ship_y < 0) {
+      game_engine_.UpdateShipPosition(ship_x, 3 * ci::app::getWindowHeight() / 4);
+    }
+
     Ship ship = game_engine_.GetShip();
+
     ship_shape_->setPosition(ship.GetPosition().first, ship.GetPosition().second);
     ship_shape_->setRotation(ship.GetRotation());
     ship_shape_->setOffset(-kShipSize / 6.0, -kShipSize / 6.0);
-
-
   }
 
   void ViewController::KeyDown(ci::app::KeyEvent KeyEvent) {

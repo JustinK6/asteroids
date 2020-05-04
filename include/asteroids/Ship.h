@@ -19,9 +19,11 @@ namespace asteroids {
 
     std::vector<Bullet> GetBullets();
 
+    void SetPosition(double x_val, double y_val);
     void SetMovement(double val);
     void SetRotation(double rotating);
     void UpdateShip();
+
   private:
     int health_;
 
