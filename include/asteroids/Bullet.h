@@ -10,6 +10,8 @@
 namespace asteroids {
   class Bullet {
   public:
+    Bullet(double x_pos, double y_pos, double dir);
+
     std::pair<double, double> GetPosition();
 
     void UpdatePosition(double x_val, double y_val);
@@ -17,6 +19,7 @@ namespace asteroids {
   private:
     double x_pos_;
     double y_pos_;
+    double dir_;
   };
 }
 

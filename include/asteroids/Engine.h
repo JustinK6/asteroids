@@ -18,7 +18,9 @@ namespace asteroids {
     Ship GetShip();
     std::vector<Asteroid> GetAsteroids();
 
-    void Step();
+    void UpdateShip();
+    void UpdateShipMovement(int val);
+    void UpdateShipRotation(double rad);
 
   private:
     int score;

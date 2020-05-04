@@ -24,6 +24,14 @@ std::vector<asteroids::Asteroid> asteroids::Engine::GetAsteroids() {
   return std::vector<Asteroid>();
 }
 
-void asteroids::Engine::Step() {
+void asteroids::Engine::UpdateShipMovement(int val) {
+  player_ship_.SetMovement(val);
+}
 
+void asteroids::Engine::UpdateShipRotation(double rad) {
+  player_ship_.SetRotation(rad);
+}
+
+void asteroids::Engine::UpdateShip() {
+  player_ship_.UpdateShip();
 }

@@ -15,13 +15,22 @@ namespace asteroids {
     Ship(double x_start, double y_start);
 
     std::pair<double, double> GetPosition();
-    void UpdatePosition(double x_val, double y_val);
+    double GetRotation();
+
     std::vector<Bullet> GetBullets();
 
+    void SetMovement(double val);
+    void SetRotation(double rotating);
+    void UpdateShip();
   private:
     int health_;
+
+    double movement_change_;
+    double angular_change_;
+
     double x_pos_;
     double y_pos_;
+    double angle_;
 
     std::vector<Bullet> bullets;
   };

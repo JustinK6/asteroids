@@ -28,6 +28,8 @@ namespace asteroids
     // Connect to key events
     ci::app::getWindow()->getSignalKeyDown().connect(std::bind( &ViewController::KeyDown,
       this, std::placeholders::_1));
+    ci::app::getWindow()->getSignalKeyUp().connect(std::bind( &ViewController::KeyUp,
+      this, std::placeholders::_1));
 
     ship_image_ = ci::gl::Texture::create(ci::loadImage(
       ci::app::loadAsset("ship.png")));
@@ -51,12 +53,57 @@ namespace asteroids
 
   void ViewController::update() {
     // Update the location of the ship
+    game_engine_.UpdateShip();
     Ship ship = game_engine_.GetShip();
     ship_shape_->setPosition(ship.GetPosition().first, ship.GetPosition().second);
+    ship_shape_->setRotation(ship.GetRotation());
+    ship_shape_->setOffset(-kShipSize / 6.0, -kShipSize / 6.0);
+
+
   }
 
   void ViewController::KeyDown(ci::app::KeyEvent KeyEvent) {
+    switch (KeyEvent.getChar()) {
+      case 'W':
+      case 'w':
+        game_engine_.UpdateShipMovement(5);
+        break;
 
+      case 'A':
+      case 'a':
+        game_engine_.UpdateShipRotation(-0.1);
+        break;
+
+      case 'D':
+      case 'd':
+        game_engine_.UpdateShipRotation(0.1);
+        break;
+
+      default:
+        break;
+    }
+  }
+
+  void ViewController::KeyUp(ci::app::KeyEvent KeyEvent) {
+    switch (KeyEvent.getChar()) {
+      case 'W':
+      case 'w':
+        game_engine_.UpdateShipMovement(0);
+        break;
+
+      case 'A':
+      case 'a':
+        game_engine_.UpdateShipRotation(0);
+        break;
+
+      case 'D':
+      case 'd':
+        game_engine_.UpdateShipRotation(0);
+        break;
+
+      default:
+        break;
+    }
   }
 
   void ViewController::SetUpViews() {

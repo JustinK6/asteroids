@@ -34,6 +34,7 @@ namespace asteroids
     po::scene::ShapeViewRef ship_shape_;
 
     void KeyDown(ci::app::KeyEvent KeyEvent);
+    void KeyUp(ci::app::KeyEvent KeyEvent);
     void SetUpViews();
   };
 }
