@@ -18,7 +18,7 @@ const int kMaxBullets = 3;
 const int kMaxBulletRange = 500;
 
 // Time between each asteroid spawn.
-const std::chrono::seconds kAsteroidTimer = std::chrono::seconds(5);
+const std::chrono::seconds kAsteroidTimer = std::chrono::seconds(2);
 
 // Max number of asteroids.
 const int kMaxAsteroids = 10;
@@ -69,7 +69,7 @@ asteroids::Engine::Engine()
 }
 
 int asteroids::Engine::GetScore() {
-  return 0;
+  return score;
 }
 
 asteroids::Ship& asteroids::Engine::GetShip() {
@@ -157,11 +157,106 @@ void asteroids::Engine::UpdateAsteroids(double max_x, double max_y) {
   }
 }
 
+void asteroids::Engine::SplitAsteroid(Asteroid asteroid) {
+  double asteroid_x = asteroid.GetPosition().first;
+  double asteroid_y = asteroid.GetPosition().second;
+
+  asteroids_.emplace_back(Asteroid(asteroid_x, asteroid_y,
+    ((double) rand() / (RAND_MAX) * 2 * M_PI), kSmallAsteroidScale));
+  asteroids_.emplace_back(Asteroid(asteroid_x, asteroid_y,
+    ((double) rand() / (RAND_MAX) * 2 * M_PI), kSmallAsteroidScale));
+}
+
 void asteroids::Engine::CheckCollisions() {
+  CheckBulletCollisions();
+}
+
+void asteroids::Engine::CheckBulletCollisions() {
   // Check bullets to asteroids
   for (int i = 0; i < bullets_.size(); i++) {
-    for (int j = 0; j < asteroids_.size(); j++) {
+    double bullet_x = bullets_[i].GetPosition().first;
+    double bullet_y = bullets_[i].GetPosition().second;
 
+    // Top left and bottom right corners of bullet
+    double bullet_tl_x = bullet_x - bullet_width / 2.0;
+    double bullet_tl_y = bullet_y - bullet_height / 2.0;
+    double bullet_br_x = bullet_x + bullet_width / 2.0;
+    double bullet_br_y = bullet_y + bullet_height / 2.0;
+
+    for (int j = 0; j < asteroids_.size(); j++) {
+      double asteroid_x = asteroids_[j].GetPosition().first;
+      double asteroid_y = asteroids_[j].GetPosition().second;
+
+      // Top left and bottom right corners of asteroid
+      double asteroid_tl_x = asteroid_x - asteroid_width / (2.0 / asteroids_[j].GetScale());
+      double asteroid_tl_y = asteroid_y - asteroid_height / (2.0 / asteroids_[j].GetScale());
+      double asteroid_br_x = asteroid_x + asteroid_width / (2.0 / asteroids_[j].GetScale());
+      double asteroid_br_y = asteroid_y + asteroid_height / (2.0 / asteroids_[j].GetScale());
+
+      // Checks for intersection
+      if (Intersects(bullet_tl_x, bullet_tl_y, bullet_br_x, bullet_br_y,
+          asteroid_tl_x, asteroid_tl_y, asteroid_br_x, asteroid_br_y)) {
+        bullets_.erase(bullets_.begin() + i);
+
+        // Split large asteroids into 2 smaller
+        if (asteroids_[j].GetScale() > 0.6) {
+          SplitAsteroid(asteroids_[j]);
+        } else {
+          asteroid_count -= 0.5;
+        }
+        asteroids_.erase(asteroids_.begin() + j);
+
+        score++;
+      }
     }
   }
+}
+
+void asteroids::Engine::CheckShipCollisions() {
+  double ship_x = player_ship_.GetPosition().first;
+  double ship_y = player_ship_.GetPosition().second;
+
+  // Top left and bottom right corners of ship
+  double ship_tl_x = ship_x - bullet_width / 2.0;
+  double ship_tl_y = ship_y - bullet_height / 2.0;
+  double ship_br_x = ship_x + bullet_width / 2.0;
+  double ship_br_y = ship_y + bullet_height / 2.0;
+
+  for (int j = 0; j < asteroids_.size(); j++) {
+    double asteroid_x = asteroids_[j].GetPosition().first;
+    double asteroid_y = asteroids_[j].GetPosition().second;
+
+    // Top left and bottom right corners of asteroid
+    double asteroid_tl_x = asteroid_x - asteroid_width / (2.0 / asteroids_[j].GetScale());
+    double asteroid_tl_y = asteroid_y - asteroid_height / (2.0 / asteroids_[j].GetScale());
+    double asteroid_br_x = asteroid_x + asteroid_width / (2.0 / asteroids_[j].GetScale());
+    double asteroid_br_y = asteroid_y + asteroid_height / (2.0 / asteroids_[j].GetScale());
+
+    // Checks for intersection
+    if (Intersects(ship_tl_x, ship_tl_y, ship_br_x, ship_br_y,
+                   asteroid_tl_x, asteroid_tl_y, asteroid_br_x, asteroid_br_y)) {
+
+      if (asteroids_[j].GetScale() > 0.6) {
+        SplitAsteroid(asteroids_[j]);
+      } else {
+        asteroid_count -= 0.5;
+      }
+      asteroids_.erase(asteroids_.begin() + j);
+    }
+  }
+}
+
+bool asteroids::Engine::Intersects(double tl_x1, double tl_y1, double br_x1, double br_y1,
+  double tl_x2, double tl_y2, double br_x2, double br_y2) {
+  // If one rectangle is on left side of other
+  if (tl_x1 >= br_x2 || tl_x2 >= br_x1) {
+    return false;
+  }
+
+  // If one rectangle is above other
+  if (tl_y1 >= br_y2 || tl_y2 >= br_y1) {
+    return false;
+  }
+
+  return true;
 }

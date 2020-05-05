@@ -66,8 +66,12 @@ namespace asteroids
     game_engine_.UpdateAsteroids(ci::app::getWindowWidth(), 3 * ci::app::getWindowHeight() / 4);
     UpdateAsteroidViews();
 
+    // Process collisions
+    game_engine_.CheckCollisions();
+
     // Update score text
     score_text_.setText(GetScoreText());
+    score_text_box_->setCiTextBox(score_text_);
   }
 
   void MainViewController::UpdateShip() {

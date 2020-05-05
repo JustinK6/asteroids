@@ -20,6 +20,8 @@ namespace asteroids {
     void SetPosition(double x_val, double y_val);
     void SetMovement(double val);
     void SetRotation(double rotating);
+    void UpdateHealth();
+
     void UpdateShip();
 
   private:

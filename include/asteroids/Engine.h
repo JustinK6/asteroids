@@ -30,6 +30,7 @@ namespace asteroids {
     void UpdateBullets(double max_x, double max_y);
 
     void UpdateAsteroids(double max_x, double max_y);
+    void SplitAsteroid(Asteroid asteroid);
 
     void CheckCollisions();
   private:
@@ -40,6 +41,11 @@ namespace asteroids {
 
     std::chrono::time_point<std::chrono::system_clock> asteroid_last_spawn_;
     std::vector<Asteroid> asteroids_;
+
+    bool Intersects(double tl_x1, double tl_y1, double br_x1, double br_y1,
+                    double tl_x2, double tl_y2, double br_x2, double br_y2);
+    void CheckBulletCollisions();
+    void CheckShipCollisions();
   };
 }
 
