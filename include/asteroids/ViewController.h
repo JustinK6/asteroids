@@ -36,6 +36,9 @@ namespace asteroids
     ci::gl::TextureRef health_image_;
     po::scene::ImageViewRef health_;
 
+    ci::gl::TextureRef shield_image_;
+    po::scene::ImageViewRef shield_;
+
     ci::gl::TextureRef ship_image_;
     po::scene::ImageViewRef ship_shape_;
 

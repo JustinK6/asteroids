@@ -45,6 +45,7 @@ namespace asteroids
     getView()->addSubview(ui_background_);
     getView()->addSubview(score_text_box_);
     getView()->addSubview(health_);
+    getView()->addSubview(shield_);
 
     // Setup Scene (this class is the root node)
     getView()->setName("Scene (Scene Root View)")
@@ -228,7 +229,7 @@ namespace asteroids
   }
 
   void ViewController::SetUpUI() {
-    // Load image asset into texture
+    // Heart sprite from: https://closeluca.itch.io/heart
     health_image_ = ci::gl::Texture::create(ci::loadImage(
       ci::app::loadAsset("fourhearts.png")));
     health_image_->setWrap(GL_CLAMP_TO_BORDER, GL_CLAMP_TO_BORDER);
@@ -237,6 +238,16 @@ namespace asteroids
     health_->setScale(3);
     health_->setPosition(ci::app::getWindowWidth() / 8,
       7 * ci::app::getWindowHeight() / 8 - health_->getScaledHeight() / 2);
+
+    // Shield icon from: https://icons8.com/icons/set/shield
+    shield_image_ = ci::gl::Texture::create(ci::loadImage(
+      ci::app::loadAsset("shieldactive.png")));
+    shield_image_->setWrap(GL_CLAMP_TO_BORDER, GL_CLAMP_TO_BORDER);
+
+    shield_ = ImageView::create(shield_image_);
+    shield_->setScale(3);
+    shield_->setPosition(5 * ci::app::getWindowWidth() / 8,
+                         7 * ci::app::getWindowHeight() / 8 - shield_->getScaledHeight() / 2);
   }
 
   void ViewController::SetUpShip() {
