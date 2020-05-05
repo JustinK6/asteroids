@@ -16,8 +16,8 @@ namespace asteroids
 
   ci::Color boundsColor( 1.0f, 1.0f, 1.0f );
 
-  ViewControllerRef MainViewController::create() {
-    return ViewControllerRef(new MainViewController() );
+  MainViewControllerRef MainViewController::create() {
+    return MainViewControllerRef(new MainViewController());
   }
 
   void MainViewController::viewDidLoad() {
@@ -52,6 +52,10 @@ namespace asteroids
       .setBoundsColor(boundsColor);
   }
 
+  bool MainViewController::isRunning() {
+    return (game_engine_.GetShip().GetHealth() > 0);
+  }
+
   void MainViewController::update() {
     // Remove all subviews to update
     game_view_->removeAllSubviews();
@@ -81,6 +85,10 @@ namespace asteroids
     // Update score text
     score_text_.setText(GetScoreText());
     score_text_box_->setCiTextBox(score_text_);
+  }
+
+  int MainViewController::GetScore() {
+    return game_engine_.GetScore();
   }
 
   void MainViewController::UpdateShip() {

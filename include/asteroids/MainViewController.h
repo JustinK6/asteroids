@@ -10,17 +10,20 @@
 namespace asteroids
 {
   class MainViewController;
-  typedef std::shared_ptr<MainViewController> ViewControllerRef;
+  typedef std::shared_ptr<MainViewController> MainViewControllerRef;
 
   class MainViewController
-    : public po::scene::ViewController
-  {
+    : public po::scene::ViewController {
   public:
-    static ViewControllerRef create();
+    static MainViewControllerRef create();
 
     void viewDidLoad() override;
 
     void update() override;
+
+    bool isRunning();
+
+    int GetScore();
 
   private:
     po::scene::ViewRef game_view_;
