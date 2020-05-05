@@ -6,6 +6,7 @@
 #define FINALPROJECT_ENGINE_H
 
 #include <vector>
+#include <chrono>
 #include "Ship.h"
 #include "Asteroid.h"
 
@@ -24,11 +25,15 @@ namespace asteroids {
 
     void FireBullet();
     void UpdateBullets(double max_x, double max_y);
+
+    void UpdateAsteroids(double max_x, double max_y);
   private:
     int score;
 
     Ship player_ship_;
     std::vector<Bullet> bullets;
+
+    std::chrono::time_point<std::chrono::system_clock> asteroid_last_spawn_;
     std::vector<Asteroid> asteroids_;
   };
 }

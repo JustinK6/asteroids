@@ -10,13 +10,19 @@
 namespace asteroids {
   class Asteroid {
   public:
+    Asteroid(double x_val, double y_val, double dir, double diam);
+
     std::pair<double, double> GetPosition();
-    void UpdatePosition(double x_val, double y_val);
+    void UpdatePosition(double max_x, double max_y);
+
+    double GetDiameter();
 
   private:
     double x_pos_;
     double y_pos_;
-    double radius;
+    double dir_;
+
+    double diameter_;
   };
 
 }

@@ -33,10 +33,17 @@ namespace asteroids
     SetUpViews();
     SetUpShip();
 
+    // Load bullet image texture
     bullet_image_ = ci::gl::Texture::create(ci::loadImage(
-      ci::app::loadAsset("ship.png")));
+      ci::app::loadAsset("bullet.png")));
     bullet_image_->setWrap(GL_CLAMP_TO_BORDER, GL_CLAMP_TO_BORDER);
 
+    // Load asteroid image texture
+    asteroid_image_ = ci::gl::Texture::create(ci::loadImage(
+      ci::app::loadAsset("asteroid.png")));
+    asteroid_image_->setWrap(GL_CLAMP_TO_BORDER, GL_CLAMP_TO_BORDER);
+
+    // Add views to main view controller
     getView()->addSubview(game_view_);
     getView()->addSubview(ui_view_ );
 
@@ -57,6 +64,10 @@ namespace asteroids
     // Update locations of bullets
     game_engine_.UpdateBullets(ci::app::getWindowWidth(), 3 * ci::app::getWindowHeight() / 4);
     UpdateBulletViews();
+
+    // Update locations of asteroids
+    game_engine_.UpdateAsteroids(ci::app::getWindowWidth(), 3 * ci::app::getWindowHeight() / 4);
+    UpdateAsteroidViews();
   }
 
   void ViewController::UpdateShip() {
@@ -110,6 +121,27 @@ namespace asteroids
 
     for (int i = 0; i < bullets_.size(); i++) {
       game_view_->addSubview(bullets_[i]);
+    }
+  }
+
+  void ViewController::UpdateAsteroidViews() {
+    asteroids_.clear();
+
+    for (int i = 0; i < game_engine_.GetAsteroids().size(); i++) {
+      Asteroid temp = game_engine_.GetAsteroids()[i];
+
+      double asteroid_x = temp.GetPosition().first;
+      double asteroid_y = temp.GetPosition().second;
+
+      ShapeViewRef asteroid = ShapeView::createRect(temp.GetDiameter(), temp.GetDiameter());
+      asteroid->setPosition(asteroid_x, asteroid_y);
+      asteroid->setTexture(asteroid_image_);
+
+      asteroids_.push_back(asteroid);
+    }
+
+    for (int i = 0; i < asteroids_.size(); i++) {
+      game_view_->addSubview(asteroids_[i]);
     }
   }
 

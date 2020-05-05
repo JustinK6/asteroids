@@ -36,8 +36,12 @@ namespace asteroids
     ci::gl::TextureRef bullet_image_;
     std::vector<po::scene::ShapeViewRef> bullets_;
 
+    ci::gl::TextureRef asteroid_image_;
+    std::vector<po::scene::ShapeViewRef> asteroids_;
+
     void UpdateShip();
     void UpdateBulletViews();
+    void UpdateAsteroidViews();
 
     void KeyDown(ci::app::KeyEvent KeyEvent);
     void KeyUp(ci::app::KeyEvent KeyEvent);
