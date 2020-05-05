@@ -25,20 +25,16 @@ namespace asteroids
     ci::app::getWindow()->getSignalKeyUp().connect(std::bind( &MainViewController::KeyUp,
       this, std::placeholders::_1));
 
+    LoadTextures();
     SetUpViews();
     SetUpUI();
     SetUpShip();
     SetUpScoreText();
 
-    // Load bullet image texture
-    bullet_image_ = ci::gl::Texture::create(ci::loadImage(
-      ci::app::loadAsset("bullet.png")));
-    bullet_image_->setWrap(GL_CLAMP_TO_BORDER, GL_CLAMP_TO_BORDER);
-
-    // Load asteroid image texture
-    asteroid_image_ = ci::gl::Texture::create(ci::loadImage(
-      ci::app::loadAsset("asteroid.png")));
-    asteroid_image_->setWrap(GL_CLAMP_TO_BORDER, GL_CLAMP_TO_BORDER);
+    // Add dimensions of entities to game engine
+    game_engine_.InitializeEntityDimensions(ship_shape_->getWidth(), ship_shape_->getHeight(),
+      bullet_image_->getWidth(), bullet_image_->getHeight(),
+      asteroid_image_->getWidth(), asteroid_image_->getHeight());
 
     // Add views to main view controller
     getView()->addSubview(game_view_);
@@ -69,6 +65,9 @@ namespace asteroids
     // Update locations of asteroids
     game_engine_.UpdateAsteroids(ci::app::getWindowWidth(), 3 * ci::app::getWindowHeight() / 4);
     UpdateAsteroidViews();
+
+    // Update score text
+    score_text_.setText(GetScoreText());
   }
 
   void MainViewController::UpdateShip() {
@@ -205,6 +204,28 @@ namespace asteroids
     }
   }
 
+  void MainViewController::LoadTextures() {
+    // Heart sprite from: https://closeluca.itch.io/heart
+    health_image_ = ci::gl::Texture::create(ci::loadImage(
+      ci::app::loadAsset("fourhearts.png")));
+    health_image_->setWrap(GL_CLAMP_TO_BORDER, GL_CLAMP_TO_BORDER);
+
+    // Shield icon from: https://icons8.com/icons/set/shield
+    shield_image_ = ci::gl::Texture::create(ci::loadImage(
+      ci::app::loadAsset("shieldactive.png")));
+    shield_image_->setWrap(GL_CLAMP_TO_BORDER, GL_CLAMP_TO_BORDER);
+
+    // Load bullet image texture
+    bullet_image_ = ci::gl::Texture::create(ci::loadImage(
+      ci::app::loadAsset("bullet.png")));
+    bullet_image_->setWrap(GL_CLAMP_TO_BORDER, GL_CLAMP_TO_BORDER);
+
+    // Load asteroid image texture
+    asteroid_image_ = ci::gl::Texture::create(ci::loadImage(
+      ci::app::loadAsset("asteroid.png")));
+    asteroid_image_->setWrap(GL_CLAMP_TO_BORDER, GL_CLAMP_TO_BORDER);
+  }
+
   void MainViewController::SetUpViews() {
     // Game background view
     game_background_ = ShapeView::createRect(ci::app::getWindowWidth(), 3 * ci::app::getWindowHeight() / 4 );
@@ -229,20 +250,10 @@ namespace asteroids
   }
 
   void MainViewController::SetUpUI() {
-    // Heart sprite from: https://closeluca.itch.io/heart
-    health_image_ = ci::gl::Texture::create(ci::loadImage(
-      ci::app::loadAsset("fourhearts.png")));
-    health_image_->setWrap(GL_CLAMP_TO_BORDER, GL_CLAMP_TO_BORDER);
-
     health_ = ImageView::create(health_image_);
     health_->setScale(3);
     health_->setPosition(ci::app::getWindowWidth() / 8,
       7 * ci::app::getWindowHeight() / 8 - health_->getScaledHeight() / 2);
-
-    // Shield icon from: https://icons8.com/icons/set/shield
-    shield_image_ = ci::gl::Texture::create(ci::loadImage(
-      ci::app::loadAsset("shieldactive.png")));
-    shield_image_->setWrap(GL_CLAMP_TO_BORDER, GL_CLAMP_TO_BORDER);
 
     shield_ = ImageView::create(shield_image_);
     shield_->setScale(3);

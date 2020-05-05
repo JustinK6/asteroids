@@ -7,11 +7,11 @@
 
 const double kAsteroidSpeed = 2.5;
 
-asteroids::Asteroid::Asteroid(double x_val, double y_val, double dir, double diam) {
+asteroids::Asteroid::Asteroid(double x_val, double y_val, double dir, double scale) {
   x_pos_ = x_val;
   y_pos_ = y_val;
   dir_ = dir;
-  scale_ = diam;
+  scale_ = scale;
 }
 
 std::pair<double, double> asteroids::Asteroid::GetPosition() {

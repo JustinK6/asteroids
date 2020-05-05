@@ -5,25 +5,47 @@
 #include <cinder/CinderMath.h>
 #include "asteroids/Engine.h"
 
+// Initial starting x position of ship.
 const int kInitialStartingX = 400;
+
+// Initial starting y position of ship.
 const int kInitialStartingY = 400;
 
+// Maximum number of bullets allowed to be fired at a time.
 const int kMaxBullets = 3;
 
-// Maximum distance a bullet can travel
+// Maximum distance a bullet can travel.
 const int kMaxBulletRange = 500;
 
-// Time between each asteroid spawn
+// Time between each asteroid spawn.
 const std::chrono::seconds kAsteroidTimer = std::chrono::seconds(5);
 
-// Max number of asteroids
+// Max number of asteroids.
 const int kMaxAsteroids = 10;
 
-// Scale of large asteroid
+// Scale of large asteroid.
 const double kLargeAsteroidScale = 1;
 
-// Scale of small asteroid
+// Scale of small asteroid.
 const double kSmallAsteroidScale = 0.5;
+
+// Width of a bullet.
+double bullet_width;
+
+// Height of a bullet.
+double bullet_height;
+
+// Width of an asteroid.
+double asteroid_width;
+
+// Height of an asteroid.
+double asteroid_height;
+
+// Width of a ship.
+double ship_width;
+
+// Height of a ship.
+double ship_height;
 
 // Potential asteroid spawn locations
 std::vector<std::pair<double, double>> asteroid_spawns = {
@@ -55,11 +77,21 @@ asteroids::Ship& asteroids::Engine::GetShip() {
 }
 
 std::vector<asteroids::Bullet> asteroids::Engine::GetBullets() {
-  return bullets;
+  return bullets_;
 }
 
 std::vector<asteroids::Asteroid> asteroids::Engine::GetAsteroids() {
   return asteroids_;
+}
+
+void asteroids::Engine::InitializeEntityDimensions(double ship_w, double ship_h, double bullet_w,
+  double bullet_h, double asteroid_w, double asteroid_h) {
+  ship_width = ship_w;
+  ship_height = ship_h;
+  bullet_width = bullet_w;
+  bullet_height = bullet_h;
+  asteroid_width = asteroid_w;
+  asteroid_height = asteroid_h;
 }
 
 void asteroids::Engine::UpdateShipPosition(double x_val, double y_val) {
@@ -71,31 +103,31 @@ void asteroids::Engine::UpdateShip() {
 }
 
 void asteroids::Engine::FireBullet() {
-  if (bullets.size() < kMaxBullets) {
+  if (bullets_.size() < kMaxBullets) {
     double x_pos = player_ship_.GetPosition().first;
     double y_pos = player_ship_.GetPosition().second;
     double dir = player_ship_.GetRotation();
 
-    bullets.emplace_back(x_pos, y_pos, dir);
+    bullets_.emplace_back(x_pos, y_pos, dir);
   }
 }
 
 void asteroids::Engine::UpdateBullets(double max_x, double max_y) {
-  for (int i = 0; i < bullets.size(); i++) {
-    bullets[i].UpdatePosition();
+  for (int i = 0; i < bullets_.size(); i++) {
+    bullets_[i].UpdatePosition();
 
     // Check if bullet has gone over max range
-    if (bullets[i].GetDistTravelled() > kMaxBulletRange) {
-      bullets.erase(bullets.begin() + i);
+    if (bullets_[i].GetDistTravelled() > kMaxBulletRange) {
+      bullets_.erase(bullets_.begin() + i);
       return;
     }
 
     // Check if bullet has gone out of bounds
-    double x_pos = bullets[i].GetPosition().first;
-    double y_pos = bullets[i].GetPosition().second;
+    double x_pos = bullets_[i].GetPosition().first;
+    double y_pos = bullets_[i].GetPosition().second;
 
     if (x_pos > max_x || x_pos < 0 || y_pos > max_y || y_pos < 0) {
-      bullets.erase(bullets.begin() + i);
+      bullets_.erase(bullets_.begin() + i);
       return;
     }
   }
@@ -122,5 +154,14 @@ void asteroids::Engine::UpdateAsteroids(double max_x, double max_y) {
 
   for (int i = 0; i < asteroids_.size(); i++) {
     asteroids_[i].UpdatePosition(max_x, max_y);
+  }
+}
+
+void asteroids::Engine::CheckCollisions() {
+  // Check bullets to asteroids
+  for (int i = 0; i < bullets_.size(); i++) {
+    for (int j = 0; j < asteroids_.size(); j++) {
+
+    }
   }
 }

@@ -20,6 +20,9 @@ namespace asteroids {
     std::vector<Asteroid> GetAsteroids();
     std::vector<Bullet> GetBullets();
 
+    void InitializeEntityDimensions(double ship_w, double ship_h, double bullet_w,
+      double bullet_h, double asteroid_w, double asteroid_h);
+
     void UpdateShip();
     void UpdateShipPosition(double x_pos, double y_pos);
 
@@ -27,11 +30,13 @@ namespace asteroids {
     void UpdateBullets(double max_x, double max_y);
 
     void UpdateAsteroids(double max_x, double max_y);
+
+    void CheckCollisions();
   private:
     int score;
 
     Ship player_ship_;
-    std::vector<Bullet> bullets;
+    std::vector<Bullet> bullets_;
 
     std::chrono::time_point<std::chrono::system_clock> asteroid_last_spawn_;
     std::vector<Asteroid> asteroids_;

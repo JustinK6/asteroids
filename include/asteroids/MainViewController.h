@@ -61,5 +61,6 @@ namespace asteroids
     void SetUpUI();
     void SetUpShip();
     void SetUpScoreText();
+    void LoadTextures();
   };
 }
