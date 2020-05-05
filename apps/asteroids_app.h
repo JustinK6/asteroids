@@ -19,7 +19,6 @@ class AsteroidsApp : public cinder::app::App {
   void setup() override;
   void update() override;
   void draw() override;
-  void keyDown(cinder::app::KeyEvent) override;
 
   po::scene::SceneRef main_scene_;
   asteroids::ViewControllerRef main_view_controller_;

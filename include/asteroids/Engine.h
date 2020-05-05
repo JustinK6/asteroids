@@ -15,18 +15,20 @@ namespace asteroids {
     Engine();
 
     int GetScore();
-    Ship GetShip();
+    Ship& GetShip();
     std::vector<Asteroid> GetAsteroids();
+    std::vector<Bullet> GetBullets();
 
     void UpdateShip();
     void UpdateShipPosition(double x_pos, double y_pos);
-    void UpdateShipMovement(int val);
-    void UpdateShipRotation(double rad);
 
+    void FireBullet();
+    void UpdateBullets(double max_x, double max_y);
   private:
     int score;
 
     Ship player_ship_;
+    std::vector<Bullet> bullets;
     std::vector<Asteroid> asteroids_;
   };
 }

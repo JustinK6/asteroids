@@ -13,13 +13,15 @@ namespace asteroids {
     Bullet(double x_pos, double y_pos, double dir);
 
     std::pair<double, double> GetPosition();
+    double GetDistTravelled();
 
-    void UpdatePosition(double x_val, double y_val);
+    void UpdatePosition();
 
   private:
     double x_pos_;
     double y_pos_;
     double dir_;
+    double dist_travelled_;
   };
 }
 

@@ -17,8 +17,6 @@ namespace asteroids {
     std::pair<double, double> GetPosition();
     double GetRotation();
 
-    std::vector<Bullet> GetBullets();
-
     void SetPosition(double x_val, double y_val);
     void SetMovement(double val);
     void SetRotation(double rotating);
@@ -33,8 +31,6 @@ namespace asteroids {
     double x_pos_;
     double y_pos_;
     double angle_;
-
-    std::vector<Bullet> bullets;
   };
 }
 

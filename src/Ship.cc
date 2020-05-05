@@ -20,10 +20,6 @@ double asteroids::Ship::GetRotation() {
   return angle_;
 }
 
-std::vector<asteroids::Bullet> asteroids::Ship::GetBullets() {
-  return std::vector<Bullet>();
-}
-
 void asteroids::Ship::SetPosition(double x_val, double y_val) {
   x_pos_ = x_val;
   y_pos_ = y_val;
