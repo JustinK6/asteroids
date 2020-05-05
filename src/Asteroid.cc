@@ -11,7 +11,7 @@ asteroids::Asteroid::Asteroid(double x_val, double y_val, double dir, double dia
   x_pos_ = x_val;
   y_pos_ = y_val;
   dir_ = dir;
-  diameter_ = diam;
+  scale_ = diam;
 }
 
 std::pair<double, double> asteroids::Asteroid::GetPosition() {
@@ -39,6 +39,6 @@ void asteroids::Asteroid::UpdatePosition(double max_x, double max_y) {
   }
 }
 
-double asteroids::Asteroid::GetDiameter() {
-  return diameter_;
+double asteroids::Asteroid::GetScale() {
+  return scale_;
 }

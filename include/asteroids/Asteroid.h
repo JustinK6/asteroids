@@ -15,14 +15,14 @@ namespace asteroids {
     std::pair<double, double> GetPosition();
     void UpdatePosition(double max_x, double max_y);
 
-    double GetDiameter();
+    double GetScale();
 
   private:
     double x_pos_;
     double y_pos_;
     double dir_;
 
-    double diameter_;
+    double scale_;
   };
 
 }

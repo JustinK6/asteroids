@@ -14,9 +14,6 @@ namespace asteroids
   float brightness = 0.65f;
   float saturation = 0.5f;
 
-  double kShipSize = 75;
-  double kBulletSize = 10;
-
   ci::Color boundsColor( 1.0f, 1.0f, 1.0f );
 
   ViewControllerRef ViewController::create() {
@@ -98,7 +95,7 @@ namespace asteroids
     // Sets the new retrieved position of the ship in the view
     ship_shape_->setPosition(ship.GetPosition().first, ship.GetPosition().second);
     ship_shape_->setRotation(ship.GetRotation());
-    ship_shape_->setOffset(-kShipSize / 6.0, -kShipSize / 6.0);
+    ship_shape_->setOffset(-ship_shape_->getWidth() / 2.0, -ship_shape_->getHeight() / 2.0);
 
     game_view_->addSubview(ship_shape_);
   }
@@ -112,9 +109,8 @@ namespace asteroids
       double bullet_x = temp.GetPosition().first;
       double bullet_y = temp.GetPosition().second;
 
-      ShapeViewRef bullet = ShapeView::createRect(kBulletSize, kBulletSize);
+      ImageViewRef bullet = ImageView::create(bullet_image_);
       bullet->setPosition(bullet_x, bullet_y);
-      bullet->setTexture(bullet_image_);
 
       bullets_.push_back(bullet);
     }
@@ -133,9 +129,9 @@ namespace asteroids
       double asteroid_x = temp.GetPosition().first;
       double asteroid_y = temp.GetPosition().second;
 
-      ShapeViewRef asteroid = ShapeView::createRect(temp.GetDiameter(), temp.GetDiameter());
+      ImageViewRef asteroid = ImageView::create(asteroid_image_);
       asteroid->setPosition(asteroid_x, asteroid_y);
-      asteroid->setTexture(asteroid_image_);
+      asteroid->setScale(temp.GetScale());
 
       asteroids_.push_back(asteroid);
     }
@@ -228,9 +224,8 @@ namespace asteroids
     ship_image_->setWrap(GL_CLAMP_TO_BORDER, GL_CLAMP_TO_BORDER);
 
     Ship ship = game_engine_.GetShip();
-    ship_shape_ = ShapeView::createRect(kShipSize, kShipSize);
+    ship_shape_ = ImageView::create(ship_image_);
     ship_shape_->setPosition(ship.GetPosition().first, ship.GetPosition().second);
-    ship_shape_->setTexture(ship_image_);
     game_view_->addSubview(ship_shape_);
   }
 }

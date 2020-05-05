@@ -19,11 +19,11 @@ const std::chrono::seconds kAsteroidTimer = std::chrono::seconds(5);
 // Max number of asteroids
 const int kMaxAsteroids = 10;
 
-// Size of large asteroid
-const int kLargeAsteroidDiameter = 120;
+// Scale of large asteroid
+const double kLargeAsteroidScale = 1;
 
-// Size of small asteroid
-const int kSmallAsteroidDiameter = 60;
+// Scale of small asteroid
+const double kSmallAsteroidScale = 0.5;
 
 // Potential asteroid spawn locations
 std::vector<std::pair<double, double>> asteroid_spawns = {
@@ -114,7 +114,7 @@ void asteroids::Engine::UpdateAsteroids(double max_x, double max_y) {
     }
 
     asteroids_.emplace_back(Asteroid(x_val, y_val,
-      ((double) rand() / (RAND_MAX) * 2 * M_PI), kLargeAsteroidDiameter));
+      ((double) rand() / (RAND_MAX) * 2 * M_PI), kLargeAsteroidScale));
     asteroid_count += 1;
 
     asteroid_last_spawn_ = std::chrono::system_clock::now();

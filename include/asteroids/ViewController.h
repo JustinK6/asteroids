@@ -1,5 +1,6 @@
 #pragma once
 
+#include <poScene/ImageView.h>
 #include "cinder/app/KeyEvent.h"
 #include "poScene/ViewController.h"
 #include "poScene/ShapeView.h"
@@ -31,13 +32,13 @@ namespace asteroids
     Engine game_engine_;
 
     ci::gl::TextureRef ship_image_;
-    po::scene::ShapeViewRef ship_shape_;
+    po::scene::ImageViewRef ship_shape_;
 
     ci::gl::TextureRef bullet_image_;
-    std::vector<po::scene::ShapeViewRef> bullets_;
+    std::vector<po::scene::ImageViewRef> bullets_;
 
     ci::gl::TextureRef asteroid_image_;
-    std::vector<po::scene::ShapeViewRef> asteroids_;
+    std::vector<po::scene::ImageViewRef> asteroids_;
 
     void UpdateShip();
     void UpdateBulletViews();
