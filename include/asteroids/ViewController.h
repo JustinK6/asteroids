@@ -26,10 +26,15 @@ namespace asteroids
     po::scene::ViewRef game_view_;
     po::scene::ShapeViewRef game_background_;
 
-    po::scene::ViewRef ui_view_;
     po::scene::ShapeViewRef ui_background_;
 
     Engine game_engine_;
+
+    ci::TextBox score_text_;
+    po::scene::TextViewRef score_text_box_;
+
+    ci::gl::TextureRef health_image_;
+    po::scene::ImageViewRef health_;
 
     ci::gl::TextureRef ship_image_;
     po::scene::ImageViewRef ship_shape_;
@@ -44,10 +49,14 @@ namespace asteroids
     void UpdateBulletViews();
     void UpdateAsteroidViews();
 
+    std::string GetScoreText();
+
     void KeyDown(ci::app::KeyEvent KeyEvent);
     void KeyUp(ci::app::KeyEvent KeyEvent);
 
     void SetUpViews();
+    void SetUpUI();
     void SetUpShip();
+    void SetUpScoreText();
   };
 }
