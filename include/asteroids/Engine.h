@@ -32,6 +32,9 @@ namespace asteroids {
     void UpdateAsteroids(double max_x, double max_y);
     void SplitAsteroid(Asteroid asteroid);
 
+    void UpdateShields();
+    bool isShielded();
+
     void CheckCollisions();
   private:
     int score;

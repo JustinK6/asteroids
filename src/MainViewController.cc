@@ -68,6 +68,10 @@ namespace asteroids
     game_engine_.UpdateAsteroids(ci::app::getWindowWidth(), 3 * ci::app::getWindowHeight() / 4);
     UpdateAsteroidViews();
 
+    // Update Shields
+    game_engine_.UpdateShields();
+    UpdateShieldView();
+
     // Process collisions
     game_engine_.CheckCollisions();
 
@@ -158,6 +162,7 @@ namespace asteroids
   void MainViewController::UpdateHealthView() {
     int health = game_engine_.GetShip().GetHealth();
 
+    // Heart sprite from: https://closeluca.itch.io/heart
     if (health > kMaxHealth - 1) {
       health_image_ = ci::gl::Texture::create(ci::loadImage(
         ci::app::loadAsset("fourhearts.png")));
@@ -177,6 +182,20 @@ namespace asteroids
 
     health_image_->setWrap(GL_CLAMP_TO_BORDER, GL_CLAMP_TO_BORDER);
     health_->setTexture(health_image_);
+  }
+
+  void MainViewController::UpdateShieldView() {
+    // Shield icon from: https://icons8.com/icons/set/shield
+    if (game_engine_.isShielded()) {
+      shield_image_ = ci::gl::Texture::create(ci::loadImage(
+        ci::app::loadAsset("shieldactive.png")));
+    } else {
+      shield_image_ = ci::gl::Texture::create(ci::loadImage(
+        ci::app::loadAsset("shieldinactive.png")));
+    }
+
+    shield_image_->setWrap(GL_CLAMP_TO_BORDER, GL_CLAMP_TO_BORDER);
+    shield_->setTexture(shield_image_);
   }
 
   //Gets the score in a string format

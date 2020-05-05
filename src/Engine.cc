@@ -20,6 +20,9 @@ const int kMaxBulletRange = 500;
 // Time between each asteroid spawn.
 const std::chrono::seconds kAsteroidTimer = std::chrono::seconds(2);
 
+// Shield time.
+const std::chrono::seconds kShieldTimer = std::chrono::seconds(3);
+
 // Max number of asteroids.
 const int kMaxAsteroids = 10;
 
@@ -66,6 +69,9 @@ asteroids::Engine::Engine()
   asteroid_last_spawn_ = std::chrono::system_clock::now();
   asteroid_index = 0;
   asteroid_count = 0;
+
+  shield_on_ = false;
+  shield_activated_ = std::chrono::system_clock::now();
 }
 
 int asteroids::Engine::GetScore() {
@@ -167,6 +173,16 @@ void asteroids::Engine::SplitAsteroid(Asteroid asteroid) {
     ((double) rand() / (RAND_MAX) * 2 * M_PI), kSmallAsteroidScale));
 }
 
+void asteroids::Engine::UpdateShields() {
+  if (shield_on_ && std::chrono::system_clock::now() - shield_activated_ > kShieldTimer) {
+    shield_on_ = false;
+  }
+}
+
+bool asteroids::Engine::isShielded() {
+  return shield_on_;
+}
+
 void asteroids::Engine::CheckCollisions() {
   CheckBulletCollisions();
   CheckShipCollisions();
@@ -236,7 +252,11 @@ void asteroids::Engine::CheckShipCollisions() {
     // Checks for intersection
     if (Intersects(ship_tl_x, ship_tl_y, ship_br_x, ship_br_y,
                    asteroid_tl_x, asteroid_tl_y, asteroid_br_x, asteroid_br_y)) {
-      player_ship_.UpdateHealth();
+      if (!shield_on_) {
+        player_ship_.UpdateHealth();
+        shield_on_ = true;
+        shield_activated_ = std::chrono::system_clock::now();
+      }
 
       if (asteroids_[j].GetScale() > 0.6) {
         SplitAsteroid(asteroids_[j]);
