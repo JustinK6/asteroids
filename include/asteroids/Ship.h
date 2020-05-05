@@ -15,6 +15,7 @@ namespace asteroids {
     Ship(double x_start, double y_start);
 
     std::pair<double, double> GetPosition();
+    int GetHealth();
     double GetRotation();
 
     void SetPosition(double x_val, double y_val);

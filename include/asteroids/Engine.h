@@ -42,6 +42,9 @@ namespace asteroids {
     std::chrono::time_point<std::chrono::system_clock> asteroid_last_spawn_;
     std::vector<Asteroid> asteroids_;
 
+    std::chrono::time_point<std::chrono::system_clock> shield_activated_;
+    bool shield_on_;
+
     bool Intersects(double tl_x1, double tl_y1, double br_x1, double br_y1,
                     double tl_x2, double tl_y2, double br_x2, double br_y2);
     void CheckBulletCollisions();

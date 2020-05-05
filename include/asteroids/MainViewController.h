@@ -51,6 +51,7 @@ namespace asteroids
     void UpdateShip();
     void UpdateBulletViews();
     void UpdateAsteroidViews();
+    void UpdateHealthView();
 
     std::string GetScoreText();
 

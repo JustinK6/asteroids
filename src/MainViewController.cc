@@ -12,6 +12,8 @@ namespace asteroids
 {
   const int kTextFontSize = 32;
 
+  const int kMaxHealth = 4;
+
   ci::Color boundsColor( 1.0f, 1.0f, 1.0f );
 
   ViewControllerRef MainViewController::create() {
@@ -68,6 +70,9 @@ namespace asteroids
 
     // Process collisions
     game_engine_.CheckCollisions();
+
+    // Update health bar
+    UpdateHealthView();
 
     // Update score text
     score_text_.setText(GetScoreText());
@@ -148,6 +153,30 @@ namespace asteroids
     for (int i = 0; i < asteroids_.size(); i++) {
       game_view_->addSubview(asteroids_[i]);
     }
+  }
+
+  void MainViewController::UpdateHealthView() {
+    int health = game_engine_.GetShip().GetHealth();
+
+    if (health > kMaxHealth - 1) {
+      health_image_ = ci::gl::Texture::create(ci::loadImage(
+        ci::app::loadAsset("fourhearts.png")));
+    } else if (health > kMaxHealth - 2) {
+      health_image_ = ci::gl::Texture::create(ci::loadImage(
+        ci::app::loadAsset("threehearts.png")));
+    } else if (health > kMaxHealth - 3) {
+      health_image_ = ci::gl::Texture::create(ci::loadImage(
+        ci::app::loadAsset("twohearts.png")));
+    } else if (health > kMaxHealth - 4) {
+      health_image_ = ci::gl::Texture::create(ci::loadImage(
+        ci::app::loadAsset("oneheart.png")));
+    } else {
+      health_image_ = ci::gl::Texture::create(ci::loadImage(
+        ci::app::loadAsset("nohearts.png")));
+    }
+
+    health_image_->setWrap(GL_CLAMP_TO_BORDER, GL_CLAMP_TO_BORDER);
+    health_->setTexture(health_image_);
   }
 
   //Gets the score in a string format

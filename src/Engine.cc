@@ -169,6 +169,7 @@ void asteroids::Engine::SplitAsteroid(Asteroid asteroid) {
 
 void asteroids::Engine::CheckCollisions() {
   CheckBulletCollisions();
+  CheckShipCollisions();
 }
 
 void asteroids::Engine::CheckBulletCollisions() {
@@ -217,10 +218,10 @@ void asteroids::Engine::CheckShipCollisions() {
   double ship_y = player_ship_.GetPosition().second;
 
   // Top left and bottom right corners of ship
-  double ship_tl_x = ship_x - bullet_width / 2.0;
-  double ship_tl_y = ship_y - bullet_height / 2.0;
-  double ship_br_x = ship_x + bullet_width / 2.0;
-  double ship_br_y = ship_y + bullet_height / 2.0;
+  double ship_tl_x = ship_x - ship_width / 2.0;
+  double ship_tl_y = ship_y - ship_height / 2.0;
+  double ship_br_x = ship_x + ship_width / 2.0;
+  double ship_br_y = ship_y + ship_height / 2.0;
 
   for (int j = 0; j < asteroids_.size(); j++) {
     double asteroid_x = asteroids_[j].GetPosition().first;
@@ -235,6 +236,7 @@ void asteroids::Engine::CheckShipCollisions() {
     // Checks for intersection
     if (Intersects(ship_tl_x, ship_tl_y, ship_br_x, ship_br_y,
                    asteroid_tl_x, asteroid_tl_y, asteroid_br_x, asteroid_br_y)) {
+      player_ship_.UpdateHealth();
 
       if (asteroids_[j].GetScale() > 0.6) {
         SplitAsteroid(asteroids_[j]);
