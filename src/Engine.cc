@@ -17,7 +17,7 @@ const int kMaxBulletRange = 500;
 const std::chrono::seconds kAsteroidTimer = std::chrono::seconds(5);
 
 // Max number of asteroids
-const int kMaxLargeAsteroids = 8;
+const int kMaxAsteroids = 10;
 
 // Size of large asteroid
 const int kLargeAsteroidDiameter = 120;
@@ -36,10 +36,14 @@ std::vector<std::pair<double, double>> asteroid_spawns = {
 // Index to cycle between asteroid spawn locations
 int asteroid_index;
 
+// Count of asteroids on screen (+1 for each large, +0.5 for each small)
+double asteroid_count;
+
 asteroids::Engine::Engine()
   : player_ship_(kInitialStartingX, kInitialStartingY) {
   asteroid_last_spawn_ = std::chrono::system_clock::now();
   asteroid_index = 0;
+  asteroid_count = 0;
 }
 
 int asteroids::Engine::GetScore() {
@@ -99,7 +103,8 @@ void asteroids::Engine::UpdateBullets(double max_x, double max_y) {
 
 void asteroids::Engine::UpdateAsteroids(double max_x, double max_y) {
   // Check if enough time has passed to add another asteroid
-  if (std::chrono::system_clock::now() - asteroid_last_spawn_ > kAsteroidTimer) {
+  if (std::chrono::system_clock::now() - asteroid_last_spawn_ > kAsteroidTimer
+    && asteroid_count < kMaxAsteroids) {
     double x_val = asteroid_spawns[asteroid_index].first;
     double y_val = asteroid_spawns[asteroid_index].second;
 
@@ -110,6 +115,7 @@ void asteroids::Engine::UpdateAsteroids(double max_x, double max_y) {
 
     asteroids_.emplace_back(Asteroid(x_val, y_val,
       ((double) rand() / (RAND_MAX) * 2 * M_PI), kLargeAsteroidDiameter));
+    asteroid_count += 1;
 
     asteroid_last_spawn_ = std::chrono::system_clock::now();
   }

@@ -13,3 +13,6 @@
  - **5/03/20** Ship entity movement complete, controlled using arrow keys
     - Next steps: Add in other entities (bullets, asteroids)
     
+ - **5/04/20** Added all other entities (asteroids, bullets, etc.), all entities appears as they should.
+    - Next steps: Add in collision detection, entity interaction
+    
