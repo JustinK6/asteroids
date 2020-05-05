@@ -9,10 +9,10 @@
 
 namespace asteroids
 {
-  class ViewController;
-  typedef std::shared_ptr<ViewController> ViewControllerRef;
+  class MainViewController;
+  typedef std::shared_ptr<MainViewController> ViewControllerRef;
 
-  class ViewController
+  class MainViewController
     : public po::scene::ViewController
   {
   public:

@@ -12,7 +12,7 @@ using cinder::app::KeyEvent;
 AsteroidsApp::AsteroidsApp() { }
 
 void AsteroidsApp::setup() {
-  main_view_controller_	= asteroids::ViewController::create();
+  main_view_controller_	= asteroids::MainViewController::create();
   main_scene_ = po::scene::Scene::create(main_view_controller_ );
 }
 

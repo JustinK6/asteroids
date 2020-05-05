@@ -5,7 +5,7 @@
 
 #include <cinder/app/App.h>
 #include <poScene/Scene.h>
-#include <asteroids/ViewController.h>
+#include <asteroids/MainViewController.h>
 
 using namespace ci;
 using namespace ci::app;

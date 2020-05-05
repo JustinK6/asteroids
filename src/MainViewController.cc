@@ -2,7 +2,7 @@
 // Created by ORaNgCHiKeN on 4/21/2020.
 //
 
-#include "asteroids/ViewController.h"
+#include "asteroids/MainViewController.h"
 
 #include "cinder/app/App.h"
 
@@ -14,15 +14,15 @@ namespace asteroids
 
   ci::Color boundsColor( 1.0f, 1.0f, 1.0f );
 
-  ViewControllerRef ViewController::create() {
-    return ViewControllerRef(new ViewController() );
+  ViewControllerRef MainViewController::create() {
+    return ViewControllerRef(new MainViewController() );
   }
 
-  void ViewController::viewDidLoad() {
+  void MainViewController::viewDidLoad() {
     // Connect to key events
-    ci::app::getWindow()->getSignalKeyDown().connect(std::bind( &ViewController::KeyDown,
+    ci::app::getWindow()->getSignalKeyDown().connect(std::bind( &MainViewController::KeyDown,
       this, std::placeholders::_1));
-    ci::app::getWindow()->getSignalKeyUp().connect(std::bind( &ViewController::KeyUp,
+    ci::app::getWindow()->getSignalKeyUp().connect(std::bind( &MainViewController::KeyUp,
       this, std::placeholders::_1));
 
     SetUpViews();
@@ -54,7 +54,7 @@ namespace asteroids
       .setBoundsColor(boundsColor);
   }
 
-  void ViewController::update() {
+  void MainViewController::update() {
     // Remove all subviews to update
     game_view_->removeAllSubviews();
     game_view_->addSubview(game_background_);
@@ -71,7 +71,7 @@ namespace asteroids
     UpdateAsteroidViews();
   }
 
-  void ViewController::UpdateShip() {
+  void MainViewController::UpdateShip() {
     Ship ship = game_engine_.GetShip();
 
     // Checking for going off the edge of the screen
@@ -104,7 +104,7 @@ namespace asteroids
     game_view_->addSubview(ship_shape_);
   }
 
-  void ViewController::UpdateBulletViews() {
+  void MainViewController::UpdateBulletViews() {
     bullets_.clear();
 
     for (int i = 0; i < game_engine_.GetBullets().size(); i++) {
@@ -125,7 +125,7 @@ namespace asteroids
     }
   }
 
-  void ViewController::UpdateAsteroidViews() {
+  void MainViewController::UpdateAsteroidViews() {
     asteroids_.clear();
 
     for (int i = 0; i < game_engine_.GetAsteroids().size(); i++) {
@@ -148,7 +148,7 @@ namespace asteroids
   }
 
   //Gets the score in a string format
-  std::string ViewController::GetScoreText() {
+  std::string MainViewController::GetScoreText() {
     std::stringstream ss;
     ss << "Score: ";
     ss << game_engine_.GetScore();
@@ -156,7 +156,7 @@ namespace asteroids
     return ss.str();
   }
 
-  void ViewController::KeyDown(ci::app::KeyEvent KeyEvent) {
+  void MainViewController::KeyDown(ci::app::KeyEvent KeyEvent) {
     switch (KeyEvent.getChar()) {
       case 'W':
       case 'w':
@@ -183,7 +183,7 @@ namespace asteroids
     }
   }
 
-  void ViewController::KeyUp(ci::app::KeyEvent KeyEvent) {
+  void MainViewController::KeyUp(ci::app::KeyEvent KeyEvent) {
     switch (KeyEvent.getChar()) {
       case 'W':
       case 'w':
@@ -205,7 +205,7 @@ namespace asteroids
     }
   }
 
-  void ViewController::SetUpViews() {
+  void MainViewController::SetUpViews() {
     // Game background view
     game_background_ = ShapeView::createRect(ci::app::getWindowWidth(), 3 * ci::app::getWindowHeight() / 4 );
     game_background_->setFillColor(ci::Color(ci::Color::black()))
@@ -228,7 +228,7 @@ namespace asteroids
     ui_background_->setPosition(0, 3 * ci::app::getWindowHeight() / 4);
   }
 
-  void ViewController::SetUpUI() {
+  void MainViewController::SetUpUI() {
     // Heart sprite from: https://closeluca.itch.io/heart
     health_image_ = ci::gl::Texture::create(ci::loadImage(
       ci::app::loadAsset("fourhearts.png")));
@@ -250,7 +250,7 @@ namespace asteroids
                          7 * ci::app::getWindowHeight() / 8 - shield_->getScaledHeight() / 2);
   }
 
-  void ViewController::SetUpShip() {
+  void MainViewController::SetUpShip() {
     // Load image asset into texture
     ship_image_ = ci::gl::Texture::create(ci::loadImage(
       ci::app::loadAsset("ship.png")));
@@ -262,7 +262,7 @@ namespace asteroids
     game_view_->addSubview(ship_shape_);
   }
 
-  void ViewController::SetUpScoreText() {
+  void MainViewController::SetUpScoreText() {
     // Set up score text view
     score_text_.size(200, ci::TextBox::GROW)
       .color(ci::Color(1, 1, 1))
