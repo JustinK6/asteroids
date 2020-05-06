@@ -221,6 +221,12 @@ namespace asteroids {
       case 'W':
       case 'w':
         game_engine_.GetShip().Accelerate(0.2);
+
+        // Change ship sprite
+        ship_image_ = ci::gl::Texture::create(ci::loadImage(
+          ci::app::loadAsset("shipthrust.png")));
+        ship_image_->setWrap(GL_CLAMP_TO_BORDER, GL_CLAMP_TO_BORDER);
+        ship_shape_->setTexture(ship_image_);
         break;
 
       case 'A':
@@ -248,6 +254,12 @@ namespace asteroids {
       case 'W':
       case 'w':
         game_engine_.GetShip().Accelerate(0);
+
+        //Change ship sprite
+        ship_image_ = ci::gl::Texture::create(ci::loadImage(
+          ci::app::loadAsset("ship.png")));
+        ship_image_->setWrap(GL_CLAMP_TO_BORDER, GL_CLAMP_TO_BORDER);
+        ship_shape_->setTexture(ship_image_);
         break;
 
       case 'A':
