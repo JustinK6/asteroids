@@ -9,7 +9,6 @@ namespace asteroidsapp {
 
 using cinder::app::KeyEvent;
 
-const int kGameMenu = 0;
 const int kGameRunning = 1;
 const int kGameOver = 2;
 
@@ -41,7 +40,6 @@ int AsteroidsApp::GetGameState() {
   if (game_state == kGameRunning && !main_view_controller_->isRunning()) {
     // Reset main view controller
     score = main_view_controller_->GetScore();
-    delete main_view_controller_.get();
 
     // Set up game over view controller
     end_view_controller_ = asteroids::EndViewController::create();

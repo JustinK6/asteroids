@@ -16,3 +16,6 @@
  - **5/04/20** Added all other entities (asteroids, bullets, etc.), all entities appears as they should.
     - Next steps: Add in collision detection, entity interaction
     
+ - **5/05/20** Added collision detection in interaction between entities, also implemented game functionality
+    - Next steps: Add documentation, bug fixes
+    
