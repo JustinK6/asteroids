@@ -12,7 +12,7 @@ const int kInitialStartingX = 400;
 const int kInitialStartingY = 400;
 
 // Maximum number of bullets allowed to be fired at a time.
-const int kMaxBullets = 3;
+const int kMaxBullets = 2;
 
 // Maximum health of a ship.
 const int kMaxHealth = 4;

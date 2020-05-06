@@ -17,6 +17,9 @@ namespace asteroids {
 
   void GameOverView::Reset() {
     running_ = true;
+
+    score_text_.setText(GetScoreText());
+    score_text_box_->setCiTextBox(score_text_);
   }
 
   void GameOverView::setup() {
@@ -38,15 +41,15 @@ namespace asteroids {
     // Set up score text
     score_text_.size(ci::TextBox::GROW, ci::TextBox::GROW)
       .color(ci::Color(0, 1, 0))
-      .alignment(ci::TextBox::Alignment::LEFT)
+      .alignment(ci::TextBox::Alignment::CENTER)
       .font(ci::Font( "Arial", kScoreFontSize));
 
-    score_text_.setText(score_);
+    score_text_.setText(GetScoreText());
     score_text_box_ = po::scene::TextView::create();
-    score_text_box_->setPosition(ci::app::getWindowWidth() / 2 - 100,
+    score_text_box_->setCiTextBox(score_text_);
+    score_text_box_->setPosition(ci::app::getWindowWidth() / 2 - score_text_box_->getWidth() / 2,
       ci::app::getWindowHeight() / 2 - score_text_box_->getHeight() / 2)
       .setSuperviewShouldIgnoreInBounds( true );
-    score_text_box_->setCiTextBox(score_text_);
 
     addSubview(game_over_);
     addSubview(score_text_box_);
@@ -56,13 +59,22 @@ namespace asteroids {
     return running_;
   }
 
-  void GameOverView::SetScoreText(std::string text) {
-    score_ = text;
+  void GameOverView::SetScore(int score) {
+    score_ = score;
   }
 
   void GameOverView::KeyDown(ci::app::KeyEvent KeyEvent) {
     if (KeyEvent.getChar() == 'R' || KeyEvent.getChar() == 'r') {
       running_ = false;
     }
+  }
+
+  std::string GameOverView::GetScoreText() {
+    std::stringstream ss;
+    ss << "SCORE: ";
+    ss << score_;
+    ss << "\nPRESS 'R' TO RETURN TO MENU";
+
+    return ss.str();
   }
 }

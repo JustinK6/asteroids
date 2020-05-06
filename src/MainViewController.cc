@@ -36,7 +36,6 @@ namespace asteroids
         break;
 
       case kGameRunning:
-        game_over_view_->SetScoreText(game_view_->GetScoreText());
         getView()->addSubview(game_view_);
         break;
 
@@ -57,7 +56,9 @@ namespace asteroids
       return;
     }
 
-    if (state_ == kGameRunning && !game_view_->IsRunning()) {
+    if (state_ == kGameRunning && !game_view_->IsRunning().first) {
+      score_ = game_view_->IsRunning().second;
+      game_over_view_->SetScore(score_);
       game_over_view_->Reset();
       state_ = kGameOver;
 

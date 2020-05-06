@@ -88,8 +88,9 @@ namespace asteroids {
     score_text_box_->setCiTextBox(score_text_);
   }
 
-  bool GameView::IsRunning() {
-    return (game_engine_.GetShip().GetHealth() > 0);
+  std::pair<bool, int> GameView::IsRunning() {
+    return std::make_pair((game_engine_.GetShip().GetHealth() > 0),
+      game_engine_.GetScore());
   }
 
   void GameView::UpdateShip() {

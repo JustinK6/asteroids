@@ -25,10 +25,10 @@ namespace asteroids {
     void Reset();
 
     bool IsRunning();
-    void SetScoreText(std::string score);
+    void SetScore(int score);
 
   private:
-    std::string score_;
+    int score_;
 
     bool running_;
 
@@ -39,6 +39,8 @@ namespace asteroids {
     po::scene::ImageViewRef game_over_;
 
     void KeyDown(ci::app::KeyEvent KeyEvent);
+
+    std::string GetScoreText();
   };
 }
 

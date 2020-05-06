@@ -17,5 +17,6 @@
     - Next steps: Add in collision detection, entity interaction
     
  - **5/05/20** Added collision detection in interaction between entities, also implemented game functionality
+    - Extras: Added basic animation for ship movement, updating health bar, shield icon, etc. 
     - Next steps: Add documentation, bug fixes
     

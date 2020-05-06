@@ -25,8 +25,7 @@ namespace asteroids {
     void Reset();
     void update() override;
 
-    std::string GetScoreText();
-    bool IsRunning();
+    std::pair<bool, int> IsRunning();
   private:
     po::scene::ViewRef game_view_;
 
@@ -64,6 +63,8 @@ namespace asteroids {
     void SetUpShip();
     void SetUpScoreText();
     void LoadTextures();
+
+    std::string GetScoreText();
   };
 
 }
