@@ -273,6 +273,11 @@ namespace asteroids {
         game_engine_.GetShip().SetRotation(0);
         break;
 
+      case 'F':
+      case 'f':
+        game_engine_.LoadBullet();
+        break;
+
       default:
         break;
     }

@@ -29,6 +29,7 @@ namespace asteroids {
     void UpdateShipPosition(double x_pos, double y_pos);
 
     void FireBullet();
+    void LoadBullet();
     void UpdateBullets(double max_x, double max_y);
 
     void UpdateAsteroids(double max_x, double max_y);
@@ -49,6 +50,7 @@ namespace asteroids {
 
     std::chrono::time_point<std::chrono::system_clock> shield_activated_;
     bool shield_on_;
+    bool bullet_fired_;
 
     bool Intersects(double tl_x1, double tl_y1, double br_x1, double br_y1,
                     double tl_x2, double tl_y2, double br_x2, double br_y2);

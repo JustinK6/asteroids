@@ -67,11 +67,18 @@ int asteroid_index;
 // Count of asteroids on screen (+1 for each large, +0.5 for each small)
 double asteroid_count;
 
+// Count of bullets on screen
+double bullet_count;
+
 asteroids::Engine::Engine()
   : player_ship_(kInitialStartingX, kInitialStartingY) {
   asteroid_last_spawn_ = std::chrono::system_clock::now();
   asteroid_index = 0;
   asteroid_count = 0;
+
+  bullet_count = 0;
+  bullet_fired_ = false;
+
   score = 0;
 
   shield_on_ = false;
@@ -81,9 +88,14 @@ asteroids::Engine::Engine()
 void asteroids::Engine::Reset() {
   player_ship_.SetPosition(kInitialStartingX, kInitialStartingY);
   player_ship_.SetHealth(kMaxHealth);
+
   asteroid_last_spawn_ = std::chrono::system_clock::now();
   asteroid_index = 0;
   asteroid_count = 0;
+
+  bullet_count = 0;
+  bullet_fired_ = false;
+
   score = 0;
 
   shield_on_ = false;
@@ -128,13 +140,19 @@ void asteroids::Engine::UpdateShip() {
 }
 
 void asteroids::Engine::FireBullet() {
-  if (bullets_.size() < kMaxBullets) {
+  if (bullet_count < kMaxBullets && !bullet_fired_) {
     double x_pos = player_ship_.GetPosition().first;
     double y_pos = player_ship_.GetPosition().second;
     double dir = player_ship_.GetRotation();
 
     bullets_.emplace_back(x_pos, y_pos, dir);
+    bullet_count++;
+    bullet_fired_ = true;
   }
+}
+
+void asteroids::Engine::LoadBullet() {
+  bullet_fired_ = false;
 }
 
 void asteroids::Engine::UpdateBullets(double max_x, double max_y) {
@@ -144,6 +162,7 @@ void asteroids::Engine::UpdateBullets(double max_x, double max_y) {
     // Check if bullet has gone over max range
     if (bullets_[i].GetDistTravelled() > kMaxBulletRange) {
       bullets_.erase(bullets_.begin() + i);
+      bullet_count--;
       return;
     }
 
@@ -153,6 +172,7 @@ void asteroids::Engine::UpdateBullets(double max_x, double max_y) {
 
     if (x_pos > max_x || x_pos < 0 || y_pos > max_y || y_pos < 0) {
       bullets_.erase(bullets_.begin() + i);
+      bullet_count--;
       return;
     }
   }
@@ -233,6 +253,7 @@ void asteroids::Engine::CheckBulletCollisions() {
       if (Intersects(bullet_tl_x, bullet_tl_y, bullet_br_x, bullet_br_y,
           asteroid_tl_x, asteroid_tl_y, asteroid_br_x, asteroid_br_y)) {
         bullets_.erase(bullets_.begin() + i);
+        bullet_count--;
 
         // Split large asteroids into 2 smaller
         if (asteroids_[j].GetScale() > 0.6) {
@@ -243,6 +264,7 @@ void asteroids::Engine::CheckBulletCollisions() {
         asteroids_.erase(asteroids_.begin() + j);
 
         score++;
+        break;
       }
     }
   }
