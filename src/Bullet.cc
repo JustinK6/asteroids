@@ -5,7 +5,7 @@
 #include <cmath>
 #include "asteroids/Bullet.h"
 
-int kBulletSpeed = 10;
+int kBulletSpeed = 7;
 
 asteroids::Bullet::Bullet(double x_pos, double y_pos, double dir) {
   x_pos_ = x_pos;
