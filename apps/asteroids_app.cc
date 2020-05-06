@@ -22,7 +22,6 @@ void AsteroidsApp::setup() {
   game_state = kGameRunning;
 
   main_view_controller_	= asteroids::MainViewController::create();
-  end_view_controller_ = asteroids::EndViewController::create();
 
   main_scene_ = po::scene::Scene::create(main_view_controller_ );
 }
@@ -42,9 +41,10 @@ int AsteroidsApp::GetGameState() {
   if (game_state == kGameRunning && !main_view_controller_->isRunning()) {
     // Reset main view controller
     score = main_view_controller_->GetScore();
-    main_view_controller_.reset();
+    delete main_view_controller_.get();
 
     // Set up game over view controller
+    end_view_controller_ = asteroids::EndViewController::create();
     end_view_controller_->SetScore(score);
     main_scene_ = po::scene::Scene::create(end_view_controller_);
 

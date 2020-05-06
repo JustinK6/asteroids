@@ -22,14 +22,14 @@ namespace asteroids {
 
     void viewDidLoad() override;
 
-    void update() override;
-
     void SetScore(int score);
 
     bool isRunning();
 
   private:
     int score_;
+
+    bool running_;
 
     ci::TextBox score_text_;
     po::scene::TextViewRef score_text_box_;
@@ -38,6 +38,8 @@ namespace asteroids {
     po::scene::ImageViewRef game_over_;
 
     std::string GetScoreText();
+
+    void KeyDown(ci::app::KeyEvent KeyEvent);
   };
 }
 

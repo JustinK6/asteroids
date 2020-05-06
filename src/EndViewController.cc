@@ -12,6 +12,11 @@ namespace asteroids {
   }
 
   void EndViewController::viewDidLoad() {
+    // Connect to key events
+    ci::app::getWindow()->getSignalKeyDown().connect(std::bind( &EndViewController::KeyDown,
+      this, std::placeholders::_1));
+    running_ = true;
+
     // Set up game over text image
     game_over_image_ = ci::gl::Texture::create(ci::loadImage(
       ci::app::loadAsset("gameovertext.png")));
@@ -30,7 +35,7 @@ namespace asteroids {
 
     score_text_.setText(GetScoreText());
     score_text_box_ = po::scene::TextView::create();
-    score_text_box_->setPosition(ci::app::getWindowWidth() / 2 - score_text_box_->getWidth(),
+    score_text_box_->setPosition(ci::app::getWindowWidth() / 2 - 100,
       ci::app::getWindowHeight() / 2 - score_text_box_->getHeight() / 2)
       .setSuperviewShouldIgnoreInBounds( true );
     score_text_box_->setCiTextBox(score_text_);
@@ -39,12 +44,8 @@ namespace asteroids {
     getView()->addSubview(score_text_box_);
   }
 
-  void EndViewController::update() {
-
-  }
-
   bool EndViewController::isRunning() {
-    return false;
+    return running_;
   }
 
   std::string EndViewController::GetScoreText() {
@@ -57,5 +58,11 @@ namespace asteroids {
 
   void EndViewController::SetScore(int score) {
     score_ = score;
+  }
+
+  void EndViewController::KeyDown(ci::app::KeyEvent KeyEvent) {
+    if (KeyEvent.getChar() == 'R' || KeyEvent.getChar() == 'r') {
+      running_ = false;
+    }
   }
 }
