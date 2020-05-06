@@ -9,19 +9,10 @@ namespace asteroidsapp {
 
 using cinder::app::KeyEvent;
 
-const int kGameRunning = 1;
-const int kGameOver = 2;
-
-int game_state;
-int score;
-
 AsteroidsApp::AsteroidsApp() { }
 
 void AsteroidsApp::setup() {
-  game_state = kGameRunning;
-
   main_view_controller_	= asteroids::MainViewController::create();
-
   main_scene_ = po::scene::Scene::create(main_view_controller_ );
 }
 

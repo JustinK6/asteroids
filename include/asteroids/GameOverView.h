@@ -2,8 +2,8 @@
 // Created by ORaNgCHiKeN on 5/5/2020.
 //
 
-#ifndef FINALPROJECT_ENDVIEWCONTROLLER_H
-#define FINALPROJECT_ENDVIEWCONTROLLER_H
+#ifndef FINALPROJECT_GAMEOVERVIEW_H
+#define FINALPROJECT_GAMEOVERVIEW_H
 
 #include <memory>
 #include <poScene/ViewController.h>
@@ -12,22 +12,23 @@
 #include <poScene/ImageView.h>
 
 namespace asteroids {
-  class EndViewController;
-  typedef std::shared_ptr<EndViewController> EndViewControllerRef;
+  class GameOverView;
+  typedef std::shared_ptr<GameOverView> GameOverViewRef;
 
-  class EndViewController
-    : public po::scene::ViewController {
+  class GameOverView
+    : public po::scene::View {
   public:
-    static EndViewControllerRef create();
+    static GameOverViewRef create();
+    virtual ~GameOverView();
 
-    void viewDidLoad() override;
+    void setup();
+    void Reset();
 
-    void SetScore(int score);
-
-    bool isRunning();
+    bool IsRunning();
+    void SetScoreText(std::string score);
 
   private:
-    int score_;
+    std::string score_;
 
     bool running_;
 
@@ -37,11 +38,9 @@ namespace asteroids {
     ci::gl::TextureRef game_over_image_;
     po::scene::ImageViewRef game_over_;
 
-    std::string GetScoreText();
-
     void KeyDown(ci::app::KeyEvent KeyEvent);
   };
 }
 
 
-#endif //FINALPROJECT_ENDVIEWCONTROLLER_H
+#endif //FINALPROJECT_GAMEOVERVIEW_H

@@ -7,6 +7,8 @@
 #include "poScene/TextView.h"
 #include "Engine.h"
 #include "GameView.h"
+#include "GameOverView.h"
+#include "MenuView.h"
 
 namespace asteroids
 {
@@ -20,11 +22,16 @@ namespace asteroids
 
     void viewDidLoad() override;
 
-    bool isRunning();
+    void update() override ;
 
   private:
-    po::scene::ShapeViewRef game_background_;
-
+    MenuViewRef menu_view_;
     GameViewRef game_view_;
+    GameOverViewRef game_over_view_;
+
+    int state_;
+    int score_;
+
+    void UpdateProgramState();
   };
 }

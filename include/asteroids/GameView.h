@@ -22,9 +22,11 @@ namespace asteroids {
     virtual ~GameView();
 
     void setup();
+    void Reset();
     void update() override;
 
-    int GetScore();
+    std::string GetScoreText();
+    bool IsRunning();
   private:
     po::scene::ViewRef game_view_;
 
@@ -53,8 +55,6 @@ namespace asteroids {
     void UpdateAsteroidViews();
     void UpdateHealthView();
     void UpdateShieldView();
-
-    std::string GetScoreText();
 
     void KeyDown(ci::app::KeyEvent KeyEvent);
     void KeyUp(ci::app::KeyEvent KeyEvent);

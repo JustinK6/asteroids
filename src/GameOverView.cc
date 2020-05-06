@@ -2,18 +2,26 @@
 // Created by ORaNgCHiKeN on 5/5/2020.
 //
 
-#include "asteroids/EndViewController.h"
+#include "asteroids/GameOverView.h"
 
 namespace asteroids {
   const int kScoreFontSize = 32;
 
-  EndViewControllerRef EndViewController::create() {
-    return EndViewControllerRef(new EndViewController());
+  GameOverViewRef GameOverView::create() {
+    GameOverViewRef ref = std::shared_ptr<GameOverView>(new GameOverView());
+    ref->setup();
+    return ref;
   }
 
-  void EndViewController::viewDidLoad() {
+  GameOverView::~GameOverView() {}
+
+  void GameOverView::Reset() {
+    running_ = true;
+  }
+
+  void GameOverView::setup() {
     // Connect to key events
-    ci::app::getWindow()->getSignalKeyDown().connect(std::bind( &EndViewController::KeyDown,
+    ci::app::getWindow()->getSignalKeyDown().connect(std::bind( &GameOverView::KeyDown,
       this, std::placeholders::_1));
     running_ = true;
 
@@ -33,34 +41,26 @@ namespace asteroids {
       .alignment(ci::TextBox::Alignment::LEFT)
       .font(ci::Font( "Arial", kScoreFontSize));
 
-    score_text_.setText(GetScoreText());
+    score_text_.setText(score_);
     score_text_box_ = po::scene::TextView::create();
     score_text_box_->setPosition(ci::app::getWindowWidth() / 2 - 100,
       ci::app::getWindowHeight() / 2 - score_text_box_->getHeight() / 2)
       .setSuperviewShouldIgnoreInBounds( true );
     score_text_box_->setCiTextBox(score_text_);
 
-    getView()->addSubview(game_over_);
-    getView()->addSubview(score_text_box_);
+    addSubview(game_over_);
+    addSubview(score_text_box_);
   }
 
-  bool EndViewController::isRunning() {
+  bool GameOverView::IsRunning() {
     return running_;
   }
 
-  std::string EndViewController::GetScoreText() {
-    std::stringstream ss;
-    ss << "Score: ";
-    ss << score_;
-
-    return ss.str();
+  void GameOverView::SetScoreText(std::string text) {
+    score_ = text;
   }
 
-  void EndViewController::SetScore(int score) {
-    score_ = score;
-  }
-
-  void EndViewController::KeyDown(ci::app::KeyEvent KeyEvent) {
+  void GameOverView::KeyDown(ci::app::KeyEvent KeyEvent) {
     if (KeyEvent.getChar() == 'R' || KeyEvent.getChar() == 'r') {
       running_ = false;
     }

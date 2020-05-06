@@ -15,6 +15,8 @@ namespace asteroids {
   public:
     Engine();
 
+    void Reset();
+
     int GetScore();
     Ship& GetShip();
     std::vector<Asteroid> GetAsteroids();

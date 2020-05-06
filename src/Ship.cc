@@ -49,3 +49,7 @@ void asteroids::Ship::UpdateShip() {
 void asteroids::Ship::UpdateHealth() {
   health_--;
 }
+
+void asteroids::Ship::SetHealth(int health) {
+  health_ = health;
+}

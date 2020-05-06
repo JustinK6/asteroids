@@ -6,7 +6,7 @@
 #include <cinder/app/App.h>
 #include <poScene/Scene.h>
 #include <asteroids/MainViewController.h>
-#include <asteroids/EndViewController.h>
+#include <asteroids/GameOverView.h>
 
 using namespace ci;
 using namespace ci::app;
@@ -23,7 +23,6 @@ class AsteroidsApp : public cinder::app::App {
 
  private:
   po::scene::SceneRef main_scene_;
-
   asteroids::MainViewControllerRef main_view_controller_;
 };
 

@@ -22,6 +22,7 @@ namespace asteroids {
     void SetMovement(double val);
     void SetRotation(double rotating);
     void UpdateHealth();
+    void SetHealth(int health);
 
     void UpdateShip();
 

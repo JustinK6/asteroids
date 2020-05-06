@@ -36,12 +36,11 @@ namespace asteroids {
 
     // Add dimensions of entities to game engine
     game_engine_.InitializeEntityDimensions(ship_shape_->getWidth(), ship_shape_->getHeight(),
-                                            bullet_image_->getWidth(), bullet_image_->getHeight(),
-                                            asteroid_image_->getWidth(), asteroid_image_->getHeight());
+      bullet_image_->getWidth(), bullet_image_->getHeight(),
+      asteroid_image_->getWidth(), asteroid_image_->getHeight());
 
     // Add views to main view controller
     addSubview(game_view_);
-    //addSubview(ui_background_);
     addSubview(score_text_box_);
     addSubview(health_);
     addSubview(shield_);
@@ -51,6 +50,12 @@ namespace asteroids {
       .setPosition(ci::vec2(0, 0))
       .setDrawBounds(false)
       .setBoundsColor(boundsColor);
+  }
+
+  void GameView::Reset() {
+    removeAllSubviews();
+    setup();
+    game_engine_.Reset();
   }
 
   void GameView::update() {
@@ -83,8 +88,8 @@ namespace asteroids {
     score_text_box_->setCiTextBox(score_text_);
   }
 
-  int GameView::GetScore() {
-    return game_engine_.GetScore();
+  bool GameView::IsRunning() {
+    return (game_engine_.GetShip().GetHealth() > 0);
   }
 
   void GameView::UpdateShip() {

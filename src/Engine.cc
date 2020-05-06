@@ -14,6 +14,9 @@ const int kInitialStartingY = 400;
 // Maximum number of bullets allowed to be fired at a time.
 const int kMaxBullets = 3;
 
+// Maximum health of a ship.
+const int kMaxHealth = 4;
+
 // Maximum distance a bullet can travel.
 const int kMaxBulletRange = 500;
 
@@ -69,9 +72,25 @@ asteroids::Engine::Engine()
   asteroid_last_spawn_ = std::chrono::system_clock::now();
   asteroid_index = 0;
   asteroid_count = 0;
+  score = 0;
 
   shield_on_ = false;
   shield_activated_ = std::chrono::system_clock::now();
+}
+
+void asteroids::Engine::Reset() {
+  player_ship_.SetPosition(kInitialStartingX, kInitialStartingY);
+  player_ship_.SetHealth(kMaxHealth);
+  asteroid_last_spawn_ = std::chrono::system_clock::now();
+  asteroid_index = 0;
+  asteroid_count = 0;
+  score = 0;
+
+  shield_on_ = false;
+  shield_activated_ = std::chrono::system_clock::now();
+
+  asteroids_.clear();
+  bullets_.clear();
 }
 
 int asteroids::Engine::GetScore() {
