@@ -5,8 +5,6 @@
 #include "asteroids/Ship.h"
 
 const int kMaxHealth = 4;
-const double kMaxVel = 7.5;
-const double kDeceleration = 0.05;
 
 asteroids::Ship::Ship(double x_start, double y_start) {
   x_pos_ = x_start;
@@ -49,10 +47,8 @@ void asteroids::Ship::UpdateShip() {
   angle_ += angular_change_;
 
   if (acceleration_ > 0) {
-    if (sqrt(vel_x_ * vel_x_ + vel_y_ * vel_y_) < kMaxVel) {
-      vel_x_ += acceleration_ * cos(angle_);
-      vel_y_ += acceleration_ * sin(angle_);
-    }
+    vel_x_ += acceleration_ * cos(angle_);
+    vel_y_ += acceleration_ * sin(angle_);
   } else {
     vel_x_ += -vel_x_ / 40.0;
     vel_y_ += -vel_y_ / 40.0;

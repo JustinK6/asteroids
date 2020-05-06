@@ -22,4 +22,3 @@ TEST_CASE("Test Asteroid Movement", "[asteroid-movement]") {
   // Make sure asteroid movement was updated
   REQUIRE(asteroid.GetPosition().first != 400);
 }
-
