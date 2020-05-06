@@ -4,15 +4,20 @@
 
 #include "asteroids/Ship.h"
 
-int kMaxHealth = 4;
+const int kMaxHealth = 4;
+const double kMaxVel = 7.5;
+const double kDeceleration = 0.05;
 
 asteroids::Ship::Ship(double x_start, double y_start) {
   x_pos_ = x_start;
   y_pos_ = y_start;
 
-  movement_change_ = 0;
+  acceleration_ = 0;
   angular_change_ = 0;
   health_ = kMaxHealth;
+
+  vel_x_ = 0;
+  vel_y_ = 0;
 }
 
 std::pair<double, double> asteroids::Ship::GetPosition() {
@@ -32,8 +37,8 @@ void asteroids::Ship::SetPosition(double x_val, double y_val) {
   y_pos_ = y_val;
 }
 
-void asteroids::Ship::SetMovement(double val) {
-  movement_change_ = val;
+void asteroids::Ship::Accelerate(double val) {
+  acceleration_ = val;
 }
 
 void asteroids::Ship::SetRotation(double rad) {
@@ -42,8 +47,19 @@ void asteroids::Ship::SetRotation(double rad) {
 
 void asteroids::Ship::UpdateShip() {
   angle_ += angular_change_;
-  x_pos_ += movement_change_ * cos(angle_);
-  y_pos_ += movement_change_ * sin(angle_);
+
+  if (acceleration_ > 0) {
+    if (sqrt(vel_x_ * vel_x_ + vel_y_ * vel_y_) < kMaxVel) {
+      vel_x_ += acceleration_ * cos(angle_);
+      vel_y_ += acceleration_ * sin(angle_);
+    }
+  } else {
+    vel_x_ += -vel_x_ / 40.0;
+    vel_y_ += -vel_y_ / 40.0;
+  }
+
+  x_pos_ += vel_x_;
+  y_pos_ += vel_y_;
 }
 
 void asteroids::Ship::UpdateHealth() {

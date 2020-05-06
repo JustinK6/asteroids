@@ -19,7 +19,7 @@ namespace asteroids {
     double GetRotation();
 
     void SetPosition(double x_val, double y_val);
-    void SetMovement(double val);
+    void Accelerate(double val);
     void SetRotation(double rotating);
     void UpdateHealth();
     void SetHealth(int health);
@@ -29,7 +29,10 @@ namespace asteroids {
   private:
     int health_;
 
-    double movement_change_;
+    double acceleration_;
+    double vel_x_;
+    double vel_y_;
+
     double angular_change_;
 
     double x_pos_;

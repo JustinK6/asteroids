@@ -220,7 +220,7 @@ namespace asteroids {
     switch (KeyEvent.getChar()) {
       case 'W':
       case 'w':
-        game_engine_.GetShip().SetMovement(5);
+        game_engine_.GetShip().Accelerate(0.2);
         break;
 
       case 'A':
@@ -247,7 +247,7 @@ namespace asteroids {
     switch (KeyEvent.getChar()) {
       case 'W':
       case 'w':
-        game_engine_.GetShip().SetMovement(0);
+        game_engine_.GetShip().Accelerate(0);
         break;
 
       case 'A':
