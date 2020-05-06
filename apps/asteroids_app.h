@@ -25,9 +25,6 @@ class AsteroidsApp : public cinder::app::App {
   po::scene::SceneRef main_scene_;
 
   asteroids::MainViewControllerRef main_view_controller_;
-  asteroids::EndViewControllerRef end_view_controller_;
-
-  int GetGameState();
 };
 
 }  // namespace asteroidsapp

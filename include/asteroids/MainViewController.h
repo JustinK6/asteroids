@@ -6,6 +6,7 @@
 #include "poScene/ShapeView.h"
 #include "poScene/TextView.h"
 #include "Engine.h"
+#include "GameView.h"
 
 namespace asteroids
 {
@@ -19,53 +20,11 @@ namespace asteroids
 
     void viewDidLoad() override;
 
-    void update() override;
-
     bool isRunning();
 
-    int GetScore();
-
   private:
-    po::scene::ViewRef game_view_;
     po::scene::ShapeViewRef game_background_;
 
-    po::scene::ShapeViewRef ui_background_;
-
-    Engine game_engine_;
-
-    ci::TextBox score_text_;
-    po::scene::TextViewRef score_text_box_;
-
-    ci::gl::TextureRef health_image_;
-    po::scene::ImageViewRef health_;
-
-    ci::gl::TextureRef shield_image_;
-    po::scene::ImageViewRef shield_;
-
-    ci::gl::TextureRef ship_image_;
-    po::scene::ImageViewRef ship_shape_;
-
-    ci::gl::TextureRef bullet_image_;
-    std::vector<po::scene::ImageViewRef> bullets_;
-
-    ci::gl::TextureRef asteroid_image_;
-    std::vector<po::scene::ImageViewRef> asteroids_;
-
-    void UpdateShip();
-    void UpdateBulletViews();
-    void UpdateAsteroidViews();
-    void UpdateHealthView();
-    void UpdateShieldView();
-
-    std::string GetScoreText();
-
-    void KeyDown(ci::app::KeyEvent KeyEvent);
-    void KeyUp(ci::app::KeyEvent KeyEvent);
-
-    void SetUpViews();
-    void SetUpUI();
-    void SetUpShip();
-    void SetUpScoreText();
-    void LoadTextures();
+    GameViewRef game_view_;
   };
 }
