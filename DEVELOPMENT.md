@@ -19,3 +19,5 @@
  - **5/05/20** Added collision detection in interaction between entities, also implemented game functionality
     - Extras: Added basic animation for ship movement, updating health bar, shield icon, etc. 
     - Next steps: Add documentation, bug fixes
+
+ - **5/06/20** Added documentation for all classes and methods, final bug fixes and completed working product
