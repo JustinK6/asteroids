@@ -7,6 +7,7 @@
 namespace asteroids {
   const int kScoreFontSize = 32;
 
+  // Creates a game over view.
   GameOverViewRef GameOverView::create() {
     GameOverViewRef ref = std::shared_ptr<GameOverView>(new GameOverView());
     ref->setup();
@@ -15,6 +16,7 @@ namespace asteroids {
 
   GameOverView::~GameOverView() {}
 
+  // Resets the view.
   void GameOverView::Reset() {
     running_ = true;
 
@@ -22,6 +24,7 @@ namespace asteroids {
     score_text_box_->setCiTextBox(score_text_);
   }
 
+  // Sets up the view.
   void GameOverView::setup() {
     // Connect to key events
     ci::app::getWindow()->getSignalKeyDown().connect(std::bind( &GameOverView::KeyDown,
@@ -51,24 +54,33 @@ namespace asteroids {
       ci::app::getWindowHeight() / 2 - score_text_box_->getHeight() / 2)
       .setSuperviewShouldIgnoreInBounds( true );
 
+    // Add views to overall view
     addSubview(game_over_);
     addSubview(score_text_box_);
   }
 
+  // Checks to see if view is running/finished.
+  // @return True if the view is running, false if finished
   bool GameOverView::IsRunning() {
     return running_;
   }
 
+  // Sets the score to be shown in the view.
+  // @param score The score to be shown
   void GameOverView::SetScore(int score) {
     score_ = score;
   }
 
+  // Checks for key events.
   void GameOverView::KeyDown(ci::app::KeyEvent KeyEvent) {
     if (KeyEvent.getChar() == 'R' || KeyEvent.getChar() == 'r') {
+      // Indicate view is finished
       running_ = false;
     }
   }
 
+  // Gets the score text to be shown.
+  // @return The score text
   std::string GameOverView::GetScoreText() {
     std::stringstream ss;
     ss << "SCORE: ";

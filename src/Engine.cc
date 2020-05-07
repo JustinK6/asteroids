@@ -53,7 +53,7 @@ double ship_width;
 // Height of a ship.
 double ship_height;
 
-// Potential asteroid spawn locations
+// Potential asteroid spawn locations.
 std::vector<std::pair<double, double>> asteroid_spawns = {
   std::make_pair(0, 200),
   std::make_pair(800, 200),
@@ -61,15 +61,16 @@ std::vector<std::pair<double, double>> asteroid_spawns = {
   std::make_pair(800, 400)
 };
 
-// Index to cycle between asteroid spawn locations
+// Index to cycle between asteroid spawn locations.
 int asteroid_index;
 
-// Count of asteroids on screen (+1 for each large, +0.5 for each small)
+// Count of asteroids on screen (+1 for each large, +0.5 for each small).
 double asteroid_count;
 
-// Count of bullets on screen
+// Count of bullets on screen.
 double bullet_count;
 
+// Creates and sets up a new engine.
 asteroids::Engine::Engine()
   : player_ship_(kInitialStartingX, kInitialStartingY) {
   asteroid_last_spawn_ = std::chrono::system_clock::now();
@@ -85,6 +86,7 @@ asteroids::Engine::Engine()
   shield_activated_ = std::chrono::system_clock::now();
 }
 
+// Resets the engine.
 void asteroids::Engine::Reset() {
   player_ship_.SetPosition(kInitialStartingX, kInitialStartingY);
   player_ship_.SetHealth(kMaxHealth);
@@ -105,22 +107,37 @@ void asteroids::Engine::Reset() {
   bullets_.clear();
 }
 
+// Gets the score of the player in the game.
+// @return The score of the player
 int asteroids::Engine::GetScore() {
   return score;
 }
 
+// Gets the ship in the game.
+// @return The ship in the game
 asteroids::Ship& asteroids::Engine::GetShip() {
   return player_ship_;
 }
 
+// Gets the bullets in the game.
+// @return The bullets in the game
 std::vector<asteroids::Bullet> asteroids::Engine::GetBullets() {
   return bullets_;
 }
 
+// Gets the asteroids in the game.
+// @return The asteroids in the game
 std::vector<asteroids::Asteroid> asteroids::Engine::GetAsteroids() {
   return asteroids_;
 }
 
+// Initializes the entity dimensions for collision detection uses.
+// @param ship_w The width of the ship
+// @param ship_h The height of the ship
+// @param bullet_w The width of the bullet
+// @param bullet_h The height of the bullet
+// @param asteroid_w The width of an asteroid
+// @param asteroid_h The height of an asteroid
 void asteroids::Engine::InitializeEntityDimensions(double ship_w, double ship_h, double bullet_w,
   double bullet_h, double asteroid_w, double asteroid_h) {
   ship_width = ship_w;
@@ -131,15 +148,21 @@ void asteroids::Engine::InitializeEntityDimensions(double ship_w, double ship_h,
   asteroid_height = asteroid_h;
 }
 
+// Updates te position of the ship.
+// @param x_val The x position to move the ship to
+// @param y_val The y position to move the ship to
 void asteroids::Engine::UpdateShipPosition(double x_val, double y_val) {
   player_ship_.SetPosition(x_val, y_val);
 }
 
+// Updates the state of the ship.
 void asteroids::Engine::UpdateShip() {
   player_ship_.UpdateShip();
 }
 
+// Attempts to fire a bullet.
 void asteroids::Engine::FireBullet() {
+  // Checks to see if number bullets less than max bullets and bullet loaded
   if (bullet_count < kMaxBullets && !bullet_fired_) {
     double x_pos = player_ship_.GetPosition().first;
     double y_pos = player_ship_.GetPosition().second;
@@ -151,10 +174,14 @@ void asteroids::Engine::FireBullet() {
   }
 }
 
+// Loads a bullet to enable firing.
 void asteroids::Engine::LoadBullet() {
   bullet_fired_ = false;
 }
 
+// Updates the state of the bullets.
+// @param max_x The maximum x coordinate a bullet can travel to
+// @param max_y The maximum y coordinate a bullet can travel to
 void asteroids::Engine::UpdateBullets(double max_x, double max_y) {
   for (int i = 0; i < bullets_.size(); i++) {
     bullets_[i].UpdatePosition();
@@ -178,6 +205,9 @@ void asteroids::Engine::UpdateBullets(double max_x, double max_y) {
   }
 }
 
+// Updates the state of the asteroids.
+// @param max_x The maximum x coordinate an asteroid can travel to
+// @param max_y The maximum y coordinate an asteroid can travel to
 void asteroids::Engine::UpdateAsteroids(double max_x, double max_y) {
   // Check if enough time has passed to add another asteroid
   if (std::chrono::system_clock::now() - asteroid_last_spawn_ > kAsteroidTimer
@@ -185,48 +215,61 @@ void asteroids::Engine::UpdateAsteroids(double max_x, double max_y) {
     double x_val = asteroid_spawns[asteroid_index].first;
     double y_val = asteroid_spawns[asteroid_index].second;
 
+    // Updates asteroid index to spawn asteroid at different location
     asteroid_index++;
     if (asteroid_index > 3) {
       asteroid_index = 0;
     }
 
+    // Creates a new asteroid with a random direction
     asteroids_.emplace_back(Asteroid(x_val, y_val,
       ((double) rand() / (RAND_MAX) * 2 * M_PI), kLargeAsteroidScale));
     asteroid_count += 1;
 
+    // Updates asteroid timer
     asteroid_last_spawn_ = std::chrono::system_clock::now();
   }
 
+  // Updates positions of all asteroids
   for (int i = 0; i < asteroids_.size(); i++) {
     asteroids_[i].UpdatePosition(max_x, max_y);
   }
 }
 
+// Splits an asteroid.
+// @param asteroid The asteroid to split
 void asteroids::Engine::SplitAsteroid(Asteroid asteroid) {
+  // Gets the position of the asteroid to split
   double asteroid_x = asteroid.GetPosition().first;
   double asteroid_y = asteroid.GetPosition().second;
 
+  // Creates two new smaller asteroids (half size) at the position with random directions
   asteroids_.emplace_back(Asteroid(asteroid_x, asteroid_y,
     ((double) rand() / (RAND_MAX) * 2 * M_PI), kSmallAsteroidScale));
   asteroids_.emplace_back(Asteroid(asteroid_x, asteroid_y,
     ((double) rand() / (RAND_MAX) * 2 * M_PI), kSmallAsteroidScale));
 }
 
+// Updates the state of the shield.
 void asteroids::Engine::UpdateShields() {
   if (shield_on_ && std::chrono::system_clock::now() - shield_activated_ > kShieldTimer) {
     shield_on_ = false;
   }
 }
 
+// Checks if the ship is shielded.
+// @return True if the ship is shielded, false if not
 bool asteroids::Engine::isShielded() {
   return shield_on_;
 }
 
+// Checks for entity collisions.
 void asteroids::Engine::CheckCollisions() {
   CheckBulletCollisions();
   CheckShipCollisions();
 }
 
+// Checks for bullet-asteroid collisions.
 void asteroids::Engine::CheckBulletCollisions() {
   // Check bullets to asteroids
   for (int i = 0; i < bullets_.size(); i++) {
@@ -270,6 +313,7 @@ void asteroids::Engine::CheckBulletCollisions() {
   }
 }
 
+// Checks for ship-asteroid collisions.
 void asteroids::Engine::CheckShipCollisions() {
   double ship_x = player_ship_.GetPosition().first;
   double ship_y = player_ship_.GetPosition().second;
@@ -294,11 +338,13 @@ void asteroids::Engine::CheckShipCollisions() {
     if (Intersects(ship_tl_x, ship_tl_y, ship_br_x, ship_br_y,
                    asteroid_tl_x, asteroid_tl_y, asteroid_br_x, asteroid_br_y)) {
       if (!shield_on_) {
+        // Decreases player health and activates temporary shield
         player_ship_.UpdateHealth();
         shield_on_ = true;
         shield_activated_ = std::chrono::system_clock::now();
       }
 
+      // Splits asteroid if large, remove if small
       if (asteroids_[j].GetScale() > 0.6) {
         SplitAsteroid(asteroids_[j]);
       } else {
@@ -309,6 +355,16 @@ void asteroids::Engine::CheckShipCollisions() {
   }
 }
 
+// Checks to see if two entities intersect.
+// @param tl_x1 The x coordinate of top left corner of first entity
+// @param tl_y1 THe y coordinate of top left corner of first entity
+// @param br_x1 The x coordinate of bottom right corner of first entity
+// @param br_y1 The y coordinate of bottom right corner of first entity
+// @param tl_x2 The x coordinate of top left corner of second entity
+// @param tl_y2 The y coordinate of top left corner of second entity
+// @param br_x2 The x coordinate of bottom right corner of second entity
+// @param br_y2 The y coordinate of bottom right corner of second entity
+// @return True if the entities intersect, false if not
 bool asteroids::Engine::Intersects(double tl_x1, double tl_y1, double br_x1, double br_y1,
   double tl_x2, double tl_y2, double br_x2, double br_y2) {
   // If one rectangle is on left side of other

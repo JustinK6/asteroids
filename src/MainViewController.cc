@@ -10,14 +10,21 @@ using namespace po::scene;
 
 namespace asteroids
 {
+  // Menu state.
   const int kMenuState = 0;
+
+  // Game state.
   const int kGameRunning = 1;
+
+  // Game over sate.
   const int kGameOver = 2;
 
+  // Creates the main view controller.
   MainViewControllerRef MainViewController::create() {
     return MainViewControllerRef(new MainViewController());
   }
 
+  // Creates views initially.
   void MainViewController::viewDidLoad() {
     state_ = kMenuState;
 
@@ -26,10 +33,12 @@ namespace asteroids
     game_over_view_ = GameOverView::create();
   }
 
+  // Updates the view controller.
   void MainViewController::update() {
     getView()->removeAllSubviews();
     UpdateProgramState();
 
+    // Adds subview based on state_
     switch (state_) {
       case kMenuState:
         getView()->addSubview(menu_view_);
@@ -48,6 +57,7 @@ namespace asteroids
     }
   }
 
+  // Updates the program state.
   void MainViewController::UpdateProgramState() {
     if (state_ == kMenuState && !menu_view_->IsRunning()) {
       game_view_->Reset();

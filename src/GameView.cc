@@ -13,6 +13,7 @@ namespace asteroids {
 
   ci::Color boundsColor( 1.0f, 1.0f, 1.0f );
 
+  // Creates the game view.
   GameViewRef GameView::create() {
     GameViewRef ref = std::shared_ptr<GameView>(new GameView());
     ref->setup();
@@ -21,6 +22,7 @@ namespace asteroids {
 
   GameView::~GameView() {}
 
+  // Sets up the view.
   void GameView::setup() {
     // Connect to key events
     ci::app::getWindow()->getSignalKeyDown().connect(std::bind( &GameView::KeyDown,
@@ -52,12 +54,14 @@ namespace asteroids {
       .setBoundsColor(boundsColor);
   }
 
+  // Resets the view.
   void GameView::Reset() {
     removeAllSubviews();
     setup();
     game_engine_.Reset();
   }
 
+  // Updates the view.
   void GameView::update() {
     // Remove all subviews to update
     game_view_->removeAllSubviews();
@@ -88,11 +92,14 @@ namespace asteroids {
     score_text_box_->setCiTextBox(score_text_);
   }
 
+  // Checks to see if the view is running/finished.
+  // @return Whether the view is running and the score of the game
   std::pair<bool, int> GameView::IsRunning() {
     return std::make_pair((game_engine_.GetShip().GetHealth() > 0),
       game_engine_.GetScore());
   }
 
+  // Updates the state and position of the ship view.
   void GameView::UpdateShip() {
     Ship ship = game_engine_.GetShip();
 
@@ -126,15 +133,19 @@ namespace asteroids {
     game_view_->addSubview(ship_shape_);
   }
 
+  // Updates the state and position of the bullet views.
   void GameView::UpdateBulletViews() {
+    // Clears the bullet views
     bullets_.clear();
 
+    // Loop through all the bullets in the game engine and set up views for each
     for (int i = 0; i < game_engine_.GetBullets().size(); i++) {
       Bullet temp = game_engine_.GetBullets()[i];
 
       double bullet_x = temp.GetPosition().first;
       double bullet_y = temp.GetPosition().second;
 
+      // Create image view for each bullet
       ImageViewRef bullet = ImageView::create(bullet_image_);
       bullet->setOffset(-bullet->getScaledWidth() / 2, -bullet->getScaledHeight() / 2);
       bullet->setPosition(bullet_x, bullet_y);
@@ -142,20 +153,25 @@ namespace asteroids {
       bullets_.push_back(bullet);
     }
 
+    // Add bullet views to overall game view
     for (int i = 0; i < bullets_.size(); i++) {
       game_view_->addSubview(bullets_[i]);
     }
   }
 
+  // Updates the state and position of the asteroid views.
   void GameView::UpdateAsteroidViews() {
+    // Clears the asteroid views
     asteroids_.clear();
 
+    // Loops through all the asteroids in the game engine and sets up view for each
     for (int i = 0; i < game_engine_.GetAsteroids().size(); i++) {
       Asteroid temp = game_engine_.GetAsteroids()[i];
 
       double asteroid_x = temp.GetPosition().first;
       double asteroid_y = temp.GetPosition().second;
 
+      // Create image view for each asteroid
       ImageViewRef asteroid = ImageView::create(asteroid_image_);
       asteroid->setPosition(asteroid_x, asteroid_y);
       asteroid->setScale(temp.GetScale());
@@ -164,15 +180,18 @@ namespace asteroids {
       asteroids_.push_back(asteroid);
     }
 
+    // Add asteroid views to overall game view
     for (int i = 0; i < asteroids_.size(); i++) {
       game_view_->addSubview(asteroids_[i]);
     }
   }
 
+  // Updates the state of the health view.
   void GameView::UpdateHealthView() {
     int health = game_engine_.GetShip().GetHealth();
 
     // Heart sprite from: https://closeluca.itch.io/heart
+    // Changes texture of heart view based on player health in game
     if (health > kMaxHealth - 1) {
       health_image_ = ci::gl::Texture::create(ci::loadImage(
         ci::app::loadAsset("fourhearts.png")));
@@ -194,8 +213,10 @@ namespace asteroids {
     health_->setTexture(health_image_);
   }
 
+  // Updates the status of the shield view.
   void GameView::UpdateShieldView() {
     // Shield icon from: https://icons8.com/icons/set/shield
+    // Changes texture of shield view based on whether shield is active
     if (game_engine_.isShielded()) {
       shield_image_ = ci::gl::Texture::create(ci::loadImage(
         ci::app::loadAsset("shieldactive.png")));
@@ -208,7 +229,7 @@ namespace asteroids {
     shield_->setTexture(shield_image_);
   }
 
-  //Gets the score in a string format
+  //Gets the score in a string format.
   std::string GameView::GetScoreText() {
     std::stringstream ss;
     ss << "Score: ";
@@ -217,6 +238,7 @@ namespace asteroids {
     return ss.str();
   }
 
+  // Checks for key events.
   void GameView::KeyDown(ci::app::KeyEvent KeyEvent) {
     switch (KeyEvent.getChar()) {
       case 'W':
@@ -250,6 +272,7 @@ namespace asteroids {
     }
   }
 
+  // Checks for key events.
   void GameView::KeyUp(ci::app::KeyEvent KeyEvent) {
     switch (KeyEvent.getChar()) {
       case 'W':
@@ -283,6 +306,7 @@ namespace asteroids {
     }
   }
 
+  // Load all initial textures.
   void GameView::LoadTextures() {
     // Heart sprite from: https://closeluca.itch.io/heart
     health_image_ = ci::gl::Texture::create(ci::loadImage(
@@ -305,6 +329,7 @@ namespace asteroids {
     asteroid_image_->setWrap(GL_CLAMP_TO_BORDER, GL_CLAMP_TO_BORDER);
   }
 
+  // Set up overall game view.
   void GameView::SetUpViews() {
     // Game view container
     game_view_ = View::create("Game View" );
@@ -314,6 +339,7 @@ namespace asteroids {
       .setName( "Game View" );
   }
 
+  // Set up overall UI view.
   void GameView::SetUpUI() {
     health_ = ImageView::create(health_image_);
     health_->setScale(3);
@@ -326,6 +352,7 @@ namespace asteroids {
                          7 * ci::app::getWindowHeight() / 8 - shield_->getScaledHeight() / 2);
   }
 
+  // Set up ship view.
   void GameView::SetUpShip() {
     // Load image asset into texture
     ship_image_ = ci::gl::Texture::create(ci::loadImage(
@@ -338,6 +365,7 @@ namespace asteroids {
     game_view_->addSubview(ship_shape_);
   }
 
+  // Set up score text view.
   void GameView::SetUpScoreText() {
     // Set up score text view
     score_text_.size(200, ci::TextBox::GROW)

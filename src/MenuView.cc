@@ -7,6 +7,7 @@
 namespace asteroids {
   const int kScoreFontSize = 32;
 
+  // Creates a menu view.
   MenuViewRef MenuView::create() {
     MenuViewRef ref = std::shared_ptr<MenuView>(new MenuView());
     ref->setup();
@@ -15,10 +16,12 @@ namespace asteroids {
 
   MenuView::~MenuView() {}
 
+  // Resets the menu view.
   void MenuView::Reset() {
     running_ = true;
   }
 
+  //Sets up the view.
   void MenuView::setup() {
     // Connect to key events
     ci::app::getWindow()->getSignalKeyDown().connect(std::bind(&MenuView::KeyDown,
@@ -38,10 +41,13 @@ namespace asteroids {
     addSubview(menu_);
   }
 
+  // Checks to see if menu view is running/finished.
+  // @return True if running, false if finished
   bool MenuView::IsRunning() {
     return running_;
   }
 
+  // Checks for key events.
   void MenuView::KeyDown(ci::app::KeyEvent KeyEvent) {
     if (KeyEvent.getChar() == 'S' || KeyEvent.getChar() == 's') {
       running_ = false;
