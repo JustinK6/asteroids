@@ -1,7 +1,7 @@
 # Asteroids
-[AsteroidMenu](https://github.com/CS126SP20/final-project-JustinK6/blob/master/AsteroidsMenuScreen.PNG)
-[AsteroidGame](https://github.com/CS126SP20/final-project-JustinK6/blob/master/AsteroidsGamePlay.PNG)
-[AsteroidGameOver](https://github.com/CS126SP20/final-project-JustinK6/blob/master/AsteroidsGameOver.PNG)
+![Image of AsteroidMenu](https://github.com/CS126SP20/final-project-JustinK6/blob/master/AsteroidsMenuScreen.PNG)
+![Image of AsteroidGame](https://github.com/CS126SP20/final-project-JustinK6/blob/master/AsteroidsGamePlay.PNG)
+![Image of AsteroidGameOver](https://github.com/CS126SP20/final-project-JustinK6/blob/master/AsteroidsGameOver.PNG)
 
 ## Dependencies
 - MSVC 2015
