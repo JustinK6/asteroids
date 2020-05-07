@@ -1,9 +1,23 @@
-# Final Project
+# Asteroids
+[AsteroidMenu]
 
-[![license](https://img.shields.io/badge/license-MIT-green)](LICENSE)
-[![docs](https://img.shields.io/badge/docs-yes-brightgreen)](docs/README.md)
+## Dependencies
+- MSVC 2015
+- Cmake
+- Cinder
 
-Read [this document](https://cliutils.gitlab.io/modern-cmake/chapters/basics/structure.html) to understand the project
-layout.
+## Game
+### Objective
+Shoot down as many asteroids as possible while dodging asteroids.
+### Controls
+Key | Action
+---| ------
+W | Accelerate Ship
+A | Rotate left
+D | Rotate Right
+F | Fire
+R | Return to Menu (From game over screen)
+S | Start game (From menu screen)
+
 
 **Author**: Anonymous - [`example@illinois.edu`](mailto:example@illinois.edu)
