@@ -7,6 +7,10 @@
 - MSVC 2015
 - Cmake
 - Cinder
+- Cinder po-Scene (Cinder block)
+
+## Windows
+- Visual Studio 2015 - https://visualstudio.microsoft.com/
 
 ## Game
 ### Objective
